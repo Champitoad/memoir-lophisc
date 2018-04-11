@@ -294,6 +294,13 @@ On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp
 Cela permet de montrer la dérivabilité de la règle gauche de l'implication réversible introduite précédemment. Pour les règles de la conjonction et de la disjonction, la démonstration est similaire et se base là aussi sur l'application des règles de contraction. Cela donne par exemple pour {\iruleR{\lor}} :
 
 \begin{displaymath}
+    \prftree[r]{\iruleR{C}}
+        {\prftree[r]{\iruleR{r\lor}}
+            {\prftree[r]{\iruleR{l\lor}}
+                {\Gamma \seq A,B,\Delta}
+                {\Gamma \seq A \lor B,B,\Delta}}
+            {\Gamma \seq A \lor B,A \lor B,\Delta}}
+        {\Gamma \seq A \lor B,\Delta}
 \end{displaymath}
 
 \section{Élimination des règles structurelles}
