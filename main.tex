@@ -1,0 +1,300 @@
+\documentclass[12pt]{report}
+
+\usepackage{polyglossia}
+\setdefaultlanguage{french}
+\usepackage[french=guillemets]{csquotes}
+\MakeOuterQuote{"}
+\usepackage[top=2.5cm, bottom=2.5cm, left=4cm, right=3cm]{geometry}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{bm}
+\usepackage{prftree}
+\usepackage{graphicx}
+\usepackage{pmboxdraw}
+\usepackage{lscape}
+\usepackage{longtable}
+\usepackage{tabu}
+\usepackage{multirow}
+
+\doublespacing
+
+\prflineextra=0em
+\prflinepadbefore=0.5ex
+\prflinepadafter=0.5ex
+\prfrulenameskip=0.5em
+
+\tabulinesep=0.5em
+\tabcolsep=0.5em
+\allowdisplaybreaks
+
+\newcommand{\lto}{\Rightarrow}
+\newcommand{\lequiv}{\Leftrightarrow}
+\newcommand{\brtack}{\hspace{-0.40em}\rotatebox[origin=c]{90}{\pmboxdrawuni{252F}}\hspace{0.15em}}
+\newcommand{\seq}{\vdash}
+\newcommand{\irule}[1]{\footnotesize$#1$}
+\newcommand{\iruleL}[1]{\irule{{#1}\seq}}
+\newcommand{\iruleR}[1]{\irule{\seq{#1}}}
+
+\newtheorem{definition}{Définition}
+
+\begin{document}
+
+\chapter*{Introduction}
+
+La \textbf{ludique} est une théorie inventée par le mathématicien Jean-Yves Girard qui se propose de refonder la logique autour de la notion d'\emph{interaction}. Elle s'inscrit directement dans la tradition de la théorie de la démonstration, et ce de deux façons : d'abord par son origine historique et technique, qui est la découverte de la \emph{focalisation} par Andreoli \cite{And92} dans le cadre de ses recherches sur la programmation logique linéaire; puis par la place centrale accordée aux \emph{desseins}, les objets primitifs de la ludique, qui correspondent à une sorte de généralisation/abstraction des preuves formelles. La ludique a été introduite extensivement par Girard dans son article \textit{Locus Solum} \cite{Gir01}. Cet article apparaît comme l'un des premiers où l'auteur n'hésite pas à complémenter les résultats mathématiques par des réflexions philosophiques plus personnelles : on est particulièrement marqué par le positionnement très tranché sur les théories logiques concurrentes, ainsi que par le style de rédaction assez excentrique pour un article académique.\\
+
+Outre ces quelques originalités --- que l'on retrouve jusque dans les choix terminologiques ---, la ludique a su démontrer son intérêt scientifique, à la fois du point de vue de la logique pure, et des applications à d'autres domaines tels que l'informatique et la linguistique. Dans le premier cas, on peut attribuer ce succès à deux résultats de complétude qui constituent une véritable justification technique de la pertinence de la ludique en tant que système logique\footnote{Il convient toutefois de mentionner que certains fragments de la logique usuelle n'ont pas encore trouvé de reconstruction ludique, ce qui relativise l'intérêt fondationnel de la théorie. C'est une des raisons qui ont poussé Girard à développer un cadre plus proche des mathématiques standards : la \textit{Géométrie de l'Interaction}.}. Dans le cas des applications extra-logiques, on constate une forte interaction avec l'informatique que l'on doit principalement à l'héritage de la logique linéaire : on a non seulement des travaux tels que \cite{Sau08} qui étendent le travail original d'Andreoli en programmation logique au cadre ludique, mais aussi des tentatives plus originales avec \cite{Ter11} qui se sert de la ludique pour reformuler dans un cadre unifié des résultats de théorie de la calculabilité/complexité, ou encore \cite{Fou11} qui propose de modéliser les interactions entre les différents agents du Web à l'aide de la ludique. Néanmoins les applications qui vont nous préoccuper dans ce mémoire relèvent de la linguistique théorique, et plus particulièrement de la \emph{pragmatique}. Les desseins mentionnés précédemment peuvent en effet être interprétés comme des stratégies argumentatives dans le cadre d'une interaction \emph{dialogique}, fournissant une approche formelle et computationnelle à l'étude du langage en tant que pratique intersubjective ancrée dans l'espace et le temps.\\
+
+Dans un premier temps, l'objectif de ce mémoire va être de montrer comment une réflexion sur la recherche automatique de preuve en calcul des séquents amène naturellement à envisager un système logique doué de la propriété de focalisation, qui lorsqu'elle est prise comme primitive donne lieu à la ludique. On introduira ensuite les concepts centraux de la théorie, ainsi qu'un certain nombre d'exemples et de théorèmes importants nous permettant de nous familiariser avec la ludique et de préparer le terrain pour les applications à la pragmatique. Ces dernières feront l'objet de la troisième partie, qui s'appuiera essentiellement sur les travaux initiés dans le cadre du projet ANR-PRELUDE entre 2006 et 2008.
+
+\chapter{Origines}
+
+Il existe aujourd'hui en théorie de la démonstration une très grande variété de systèmes de calcul des séquents. Les premiers systèmes $\mathbf{LK}$ et $\mathbf{LJ}$, conçus respectivement pour les logiques classique et intuitionniste, furent introduits par Gentzen comme outils techniques pour prouver la cohérence de l'arithmétique de manière finitiste, conformément au programme de Hilbert. Mais l'échec de ce dernier, prononcé notamment par le second théorème d'incomplétude de Gödel, incita les logiciens qui reprirent les travaux de Gentzen à étudier ces systèmes de logique pure pour eux-mêmes. Plus précisément, on commença à s'intéresser aux propriétés \emph{structurelles} des démonstrations exprimées dans ce format, amenant inévitablement à la création de variantes en tous genres possédant ou non certaines propriétés.\\
+
+Avec l'arrivée de l'informatique, on s'intéressa de plus en plus aux propriétés \emph{computationnelles} des systèmes de calcul des séquents. En particulier, dans le paradigme du \emph{calcul comme recherche de preuve} employé en programmation logique, on cherche à optimiser le processus de recherche d'une preuve pour un séquent dans une logique donnée, afin de réduire la complexité des programmes à l'exécution. Les propriétés structurelles des démonstrations occupent dans ce cadre une place centrale, les conséquences du choix de telle ou telle règle lors de la conception d'un système allant bien au-delà de la simple préférence esthétique. L'une de ces propriétés, la \textbf{réversibilité}, se trouve être au c\oe{}ur de l'innovation technique qui a donné naissance à la ludique : la \textbf{focalisation}.
+
+\section{Le calcul des séquents}
+
+Historiquement, le premier formalisme adopté en théorie de la démonstration afin de représenter les preuves est celui des \emph{systèmes à la Hilbert}. De nature axiomatique, ces derniers ne comprennent que très peu de règles d'inférence --- souvent uniquement le \textit{modus ponens} ---, et se prêtent donc mal à un usage pratique visant à raisonner à l'intérieur du système. De plus, cette simplicité structurelle des démonstrations formelles en fait des objets assez pauvres d'un point de vue mathématique, et donc peu aptes à concurrencer les approches sémantiques alors particulièrement prisées à l'époque. C'est très probablement ce qui a poussé Gentzen à mettre au point deux systèmes de déduction alternatifs : la \emph{déduction naturelle} dans un premier temps, puis le \emph{calcul des séquents}.\\
+
+Les deux systèmes ont en commun d'être construits autour d'un unique axiome (ou schéma d'axiomes), déplaçant tout le contenu logique auparavant exprimé au niveau des formules directement dans les règles d'inférences, donc dans la structure même des démonstrations. Alors que la déduction naturelle tente de coller le plus possible à la façon dont le mathématicien raisonne en pratique, le calcul des séquents n'a été introduit que comme outil technique pour prouver le \textit{Haupstatz} ou \emph{théorème d'élimination des coupures}, que Gentzen n'arrivait pas à formuler en déduction naturelle, et n'apparaît donc pas de prime abord très adapté en tant qu'outil pratique pour la recherche de preuves. Or il se trouve que les preuves sans coupures, qui d'après le \textit{Haupstatz} quotientent l'ensemble des preuves sans perte de puissance déductive, possèdent des propriétés particulièrement intéressantes pour la recherche de preuve, notamment la \emph{propriété de la sous-formule} : celle-ci garantit qu'à toute étape de la déduction, les formules apparaissant dans les prémisses sont contenues dans les formules apparaissant dans la conclusion, ce qui réduit considérablement l'espace de recherche (en supposant que l'on parte de la conclusion).\\
+
+Tout cela semble néanmoins un peu abscon pour qui n'a pas déjà une bonne connaissance du calcul des séquents : on présente donc le système $\mathbf{LKp}$, qui correspond au système $\mathbf{LK}$ de Gentzen réduit au cadre propositionnel, et qui sera le point de départ de notre réflexion sur la recherche de preuves. On commence par définir la notion de \emph{séquent} :
+
+\begin{definition}
+    On appelle \emph{séquent} une expression $\Gamma \seq \Delta$, où $\Gamma$ et $\Delta$ sont des suites finies de formules.
+\end{definition}
+
+Une interprétation intuitive de la signification d'un séquent consiste à lire $\Gamma \seq \Delta$ comme une \emph{implication} ayant pour antécédant la \emph{conjonction} des formules de $\Gamma$, et pour conséquent la \emph{disjonction} des formules de $\Delta$. On verra que selon le système de calcul des séquents adopté, on mettra un sens différent sur ces trois opérations logiques usuelles. En revanche, quelque soit le système, on disposera d'un unique axiome d'\textbf{identité}\footnote{On choisit de présenter les axiomes comme des règles sans prémisses, afin de les distinguer plus clairement des séquents hypothèses.}, ainsi que de la fameuse règle de \textbf{coupure} (\emph{cut} en anglais), qui correspond à la \emph{composition} des preuves en déduction naturelle :
+
+\begin{displaymath}
+    \prfbyaxiom{\irule{id}}{A \seq A}
+    \qquad
+    \prftree[r]{\irule{cut}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma',A \seq \Delta'}
+        {\Gamma,\Gamma' \seq \Delta,\Delta'}
+\end{displaymath}
+
+Les règles restantes sont séparées en deux groupes : les règles \textbf{structurelles} qui agissent sur la structure des séquents, et les règles \textbf{logiques} qui agissent sur la structure des formules. Chaque règle peut agir principalement soit sur la partie gauche, soit sur la partie droite du séquent conclusion. Notre convention de nommage sera d'introduire le symbole $\seq$ à la fin du nom pour les règles gauches, et au début pour les règles droites.\\
+
+Dans $\mathbf{LKp}$, le groupe structurel est composé de trois règles dites d'\textbf{échange}, d'\textbf{affaiblissement} et de \textbf{contraction}, dénotées respectivement par les lettres $X$, $W$ et $C$ :
+
+\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+    \prftree[r]{\iruleL{X}}
+        {\Gamma,A,B,\Gamma' \seq \Delta}
+        {\Gamma,B,A,\Gamma' \seq \Delta} &
+    \prftree[r]{\iruleR{X}}
+        {\Gamma \seq \Delta,A,B,\Delta'}
+        {\Gamma \seq \Delta,B,A,\Delta'} \\
+
+    \prftree[r]{\iruleL{W}}
+        {\Gamma \seq \Delta}
+        {\Gamma,A \seq \Delta} &
+    \prftree[r]{\iruleR{W}}
+        {\Gamma \seq \Delta}
+        {\Gamma \seq A,\Delta} \\
+
+    \prftree[r]{\iruleL{C}}
+        {\Gamma,A,A \seq \Delta}
+        {\Gamma,A \seq \Delta} &
+    \prftree[r]{\iruleR{C}}
+        {\Gamma \seq A,A,\Delta}
+        {\Gamma \seq A,\Delta}
+\end{longtabu}
+
+Les règles d’échange expriment simplement la possibilité de changer l’ordre des formules à gauche ou à droite d’un séquent, et seront admises dans tous les systèmes considérés dans ce mémoire. Les règles d’affaiblissement expriment la possibilité d’ajouter des formules dans un séquent, et correspondent à la \emph{décharge vide} d’hypothèses en déduction naturelle. Les règles de contraction permettent quant à elle de dupliquer une formule lors de la recherche de preuve pour un séquent, et correspondent à la \emph{décharge multiple} d’hypothèses en déduction naturelle.\\
+
+Dans le groupe logique, on dispose de règles pour introduire chaque connecteur propositionnel :
+
+\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+    \prftree[r]{\iruleL{\neg}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma,\neg A \seq \Delta} &
+    \prftree[r]{\iruleR{\neg}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma \seq \neg A,\Delta} \\
+
+    \prftree[r]{\iruleL{\lto}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma',B \seq \Delta'}
+        {\Gamma,\Gamma',A \lto B \seq \Delta,\Delta'} &
+    \prftree[r]{\iruleR{\lto}}
+        {\Gamma,A \seq B,\Delta}
+        {\Gamma \seq A \lto B,\Delta} \\
+
+    \prftree[r]{\iruleL{l\land}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma,A \land B \seq \Delta} &
+    \multirow{2}{*}{
+    \prftree[r]{\iruleR{\land}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma \seq B,\Delta}
+        {\Gamma \seq A \land B,\Delta}} \\
+    \prftree[r]{\iruleL{r\land}}
+        {\Gamma,B \seq \Delta}
+        {\Gamma,A \land B \seq \Delta} & \\
+
+    \multirow{2}{*}{
+    \prftree[r]{\iruleL{\lor}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma,B \seq \Delta}
+        {\Gamma,A \lor B \seq \Delta}} &
+    \prftree[r]{\iruleR{l\lor}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma \seq A \lor B,\Delta} \\ &
+    \prftree[r]{\iruleR{r\lor}}
+        {\Gamma \seq B,\Delta}
+        {\Gamma \seq A \lor B,\Delta} \\
+
+    %\prftree[r]{\iruleL{\forall}}
+        %{\Gamma,A[t/x] \seq \Delta}
+        %{\Gamma,\forall x A \seq \Delta} &
+    %\prftree[r]{\iruleR{\forall}}
+        %{\Gamma \seq A[y/x],\Delta}
+        %{\Gamma \seq \forall x A,\Delta} \\
+
+    %\prftree[r]{\iruleL{\exists}}
+        %{\Gamma,A[y/x] \seq \Delta}
+        %{\Gamma,\exists x A \seq \Delta} &
+    %\prftree[r]{\iruleR{\exists}}
+        %{\Gamma \seq A[t/x],\Delta}
+        %{\Gamma \seq \exists x A,\Delta}
+\end{longtabu}
+
+%Pour les règles des quantificateurs, on est soumis aux contraintes usuelles associées au système de termes : $t$ doit être librement substituable à $x$ dans $A$, et $y$ doit être librement substituable à $x$ dans $A$ en plus d'être non-libre dans $\Gamma$ et $\Delta$.
+
+\section{Stratégies de recherche}
+
+Lorsque l'on procède à la recherche d'une preuve pour un séquent donné, plusieurs stratégies sont envisageables : les premières, que l'on pourrait qualifier de \emph{top-down}\footnote{En référence au sens dans lequel s'effectue traditionnellement les dérivations.}, consistent à partir d'axiomes qui nous semblent pertinents, puis à utiliser les règles du système adopté pour produire un certain nombre de dérivations que l'on va pouvoir composer entre elles, et ce jusqu'à arriver à la conclusion recherchée. C'est ce genre de méthode heuristique qui est utilisé en pratique en mathématiques\footnote{En remplaçant le plus souvent les axiomes par des lemmes ou des hypothèses.}, ou encore dans les systèmes à la Hilbert. Or contrairement à ces derniers, les systèmes de calcul des séquents possèdent très peu d'axiomes, et se prêtent donc assez mal à ce type de stratégie. En revanche on vient de voir qu'ils comportent beaucoup de règles de dérivation, parfois plusieurs pour un même connecteur. Cette propriété les rend particulièrement adaptés aux stratégies de recherche dites \textbf{root-first} (ou, par opposition aux premières, \emph{bottom-up}), que l'on peut résumer très succintement par l'algorithme suivant :\\
+
+Soit $\sigma$ le séquent que l'on cherche à prouver, appelé \emph{séquent final}.
+\begin{enumerate}
+    \item Établir la liste $L$ des instances de règles applicables dans le système choisi qui ont $\sigma$ pour conclusion.
+    \item Choisir une instance de règle $\mathsf{r}$ dans $L$.
+        \begin{enumerate}
+            \item Si toutes les prémisses de $\mathsf{r}$ sont des instances d'axiomes, terminer la recherche.
+            \item Sinon, réitérer l'algorithme sur les séquents prémisses de $\mathsf{r}$ qui ne sont pas des instances d'axiomes.
+        \end{enumerate}
+\end{enumerate}
+~\\
+On voit donc que ces stratégies se décrivent bien de manière algorithmique, ce qui laisse penser qu'on pourrait trouver une procédure de recherche effective, c'est-à-dire qui \emph{termine}, pour notre système $\mathbf{LKp}$. On constate toutefois en pratique qu'un certain nombre d'obstacles empêchent l'existence d'une telle procédure, obstacles qui se manifestent essentiellement dès la première étape de notre algorithme : en effet, comment déterminer si une instance de règle $\mathsf{r}$ est applicable en ayant pour unique information son séquent conclusion ? Il est tout à fait possible que $\mathsf{r}$ soit valide à un niveau \emph{local}, mais inapplicable à un niveau \emph{global}, au sens où elle ne permet pas d'aboutir à une preuve du séquent final.\\
+
+Prenons pour exemple le séquent $p \seq p \lor q$. La seule preuve de ce séquent consiste en une simple application de la règle {\iruleR{l\lor}}, qui amène à l'axiome $p \seq p$. En suivant une implémentation naïve de notre algorithme qui incluerait dans $L$ l'ensemble des instances de règles valides, on pourrait très bien opter pour une instance de la règle {\iruleR{r\lor}}, qui nous amènerait au séquent $p \seq q$ pour lequel il n'existe aucune instance de règle valide. Dans ce cas très simple, une solution un peu "brutale" consisterait à effectuer du \emph{backtracking}, c'est-à-dire revenir en arrière et essayer une autre instance de règle valide sur $p \seq p \lor q$. Néanmoins dans des cas plus complexes, le \emph{backtracking} se révèle vite impraticable du fait qu'il est très difficile de déterminer à quel séquent antérieur recommencer la recherche afin d'obtenir une preuve du séquent final; sans compter les problèmes de complexité combinatoire quand $L$ contient beaucoup d'éléments.
+
+\section{Réversibilité classique}
+
+On voit donc que pour concevoir une procédure de recherche effective, il va être nécessaire d'obtenir plus d'informations sur la \emph{structure} des preuves dans le système considéré, afin de quotienter au maximum l'espace des preuves sans perte de pouvoir déductif. On a déjà mentionné que grâce au \emph{Haupstatz}, on peut quotienter l'ensemble des preuves de $\mathbf{LK}$ (et donc de $\mathbf{LKp}$) par l'ensemble des preuves sans coupures. Cela signifie concrètement que lors de notre procédure de recherche, il ne sera pas nécessaire d'inclure dans $L$ les instances de la règle $cut$, ce qui réduit considérablement l'espace de recherche puisque toutes les autres règles de $\mathbf{LKp}$ vérifient la \emph{propriété de la sous-formule} :
+
+\begin{definition}
+    On dit qu'une règle $\mathsf{R}$ vérifie la \emph{propriété de la sous-formule} lorsque pour toute instance $\mathsf{r}$ de $\mathsf{R}$, chaque formule contenue dans les séquents prémisses de $\mathsf{r}$ est sous-formule d'au moins une formule du séquent conclusion de $\mathsf{r}$.
+\end{definition}
+
+Néanmoins la propriété de la sous-formule ne suffit pas à éliminer le problème du \emph{backtracking} évoqué précédemment. Dans l'exemple donné, le problème venait des règles {\iruleR{l\lor}} et {\iruleR{r\lor}}, et plus précisément du fait qu'elles ne sont pas \textbf{réversibles} :
+
+\begin{definition}
+    On dit qu'une règle $\mathsf{R}$ est \emph{réversible} dans un système $\mathbf{D}$ lorsque pour toute instance $\mathsf{r}$ de $\mathsf{R}$ de prémisses $\sigma_1,\ldots,\sigma_n$ et de conclusion $\sigma$, si $\sigma$ est prouvable dans $\mathbf{D}$, alors $\sigma_i$ l'est aussi (pour $1 \leq i \leq n$).
+\end{definition}
+
+Ainsi, étant donné un séquent de la forme $\Gamma \seq A \lor B,\Delta$ prouvable dans $\mathbf{LKp}$, il n'est pas possible de déterminer si la prémisse qui nous a permis de le conclure est $\Gamma \seq A,\Delta$ ou $\Gamma \seq B,\Delta$, et il se peut que seulement l'une des deux soit prouvable dans $\mathbf{LKp}$ : on dit qu'il y a \emph{perte d'information} lors de l'application de la règle {\iruleR{l\lor}} ou {\iruleR{r\lor}}.\\
+
+La question est donc de savoir s'il est possible de remplacer les règles irréversibles de $\mathbf{LKp}$ par des règles réversibles afin d'éliminer le besoin d'effectuer du \emph{backtracking}, ce qui nous rapprocherait de la procédure de recherche effective recherchée. On peut déjà constater que de manière parfaitement symétrique, les deux règles gauches de la conjonction sont elles aussi irréversibles. Or si l'on se souvient de l'interprétation intuitive d'un séquent en termes de conjonction à gauche et de disjonction à droite, on peut être tenté de remplacer ces deux connecteurs par une simple "," de séparation des formules du séquent. De cette manière on tombe sur les deux règles d'affaiblissement, elles aussi irréversibles, ce qui suggère deux choses :
+
+\begin{enumerate}
+    \item Les règles de la conjonction et de la disjonction de $\mathbf{LKp}$ ne sont qu'une version logique des règles d'affaiblissement, permettant d'exprimer celles-ci à l'intérieur des formules. Si l'on interprète le calcul des séquents comme une théorie formelle de la relation de dérivabilité (comme cela a pu être fait dans \cite{vPN01}), c'est une façon de passer du méta-langage au langage objet.
+    \item L'affaiblissement est la source de l'irréversibilité des règles, au moins dans $\mathbf{LKp}$.
+\end{enumerate}
+
+Pour appuyer la seconde suggestion, il faudrait toutefois donner une explication en termes d'affaiblissement de l'irréversibilité de {\iruleL{\lto}}, dernière règle irréversible de $\mathbf{LKp}$ que nous n'avons pas encore traitée. On peut pour cela faire appel à la notion de contextes \emph{partagés} ou \emph{indépendants} au sein d'une règle à plusieurs prémisses :
+
+\begin{definition}
+    On dit qu'une règle est \emph{à contextes partagés} lorsqu'elle est de la forme :
+    \begin{displaymath}
+        \prftree
+            {\Gamma,\Pi_1 \seq \Lambda_1,\Delta}
+            {\ldots}
+            {\Gamma,\Pi_n \seq \Lambda_n,\Delta}
+            {\Gamma,\Pi \seq \Lambda,\Delta}
+    \end{displaymath}
+    avec $n > 1$.
+\end{definition}
+
+\begin{definition}
+    On dit qu'une règle est \emph{à contextes indépendants} lorsqu'elle est de la forme :
+    \begin{displaymath}
+        \prftree
+            {\Gamma_1,\Pi_1 \seq \Lambda_1,\Delta_1}
+            {\ldots}
+            {\Gamma_n,\Pi_n \seq \Lambda_n,\Delta_n}
+            {\Gamma_1,\ldots,\Gamma_n,\Pi \seq \Lambda,\Delta_1,\ldots,\Delta_n}
+    \end{displaymath}
+    avec $n > 1$.
+\end{definition}
+
+On constate alors qu'à partir du moment où une règle est à contextes indépendants, elle est irréversible. En effet, dans la présentation des règles donnée en définition, les $\Gamma_1,\ldots,\Gamma_n,\Delta_1,\ldots,\Delta_n$ peuvent correspondre à n'importe quel partitionnement du contexte du séquent conclusion si l'on se place dans le cadre d'une recherche \emph{root-first}; or seuls certains partitionnements permettent d'obtenir des prémisses prouvables, partitionnements qui ne peuvent être déterminées uniquement à partir de la conclusion.\\
+
+\emph{A contrario}, les règles à contextes partagés {\iruleL{\lor}} et {\iruleR{\land}} sont réversibles, notamment parce que ne se pose plus la question du partitionnement du contexte, qui est simplement dupliqué dans chaque prémisse. On peut en fait remarquer que les règles à contextes indépendants se dérivent facilement des règles à contextes partagés, par simples applications itérées des règles d'affaiblissement\footnote{Cette remarque est tirée de \cite{Cur05}.} (dénotées ici par la double ligne d'inférence) :
+
+\begin{displaymath}
+    \prftree
+        {\prftree[d]
+            {\Gamma_1,\Pi_1 \seq \Lambda_1,\Delta_1}
+            {\Gamma_1,\ldots,\Gamma_n,\Pi_1 \seq \Lambda_1,\Delta_1,\ldots,\Delta_n}}
+        {\ldots}
+        {\prftree[d]
+            {\Gamma_n,\Pi_n \seq \Lambda_n,\Delta_n}
+            {\Gamma_1,\ldots,\Gamma_n,\Pi_n \seq \Lambda_n,\Delta_1,\ldots,\Delta_n}}
+        {\Gamma_1,\ldots,\Gamma_n,\Pi \seq \Lambda,\Delta_1,\ldots,\Delta_n}
+\end{displaymath}
+
+Tout cela suggère la version réversible et à contextes partagés suivante de la règle gauche de l'implication :
+
+\begin{displaymath}
+    \prftree[r]{\iruleL{\lto}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma,B \seq \Delta}
+        {\Gamma,A \lto B \seq \Delta}
+\end{displaymath}
+
+Afin de restreindre l'irréversibilité aux règles d'affaiblissement, il nous reste encore à trouver une version réversible des règles de la conjonction et de la disjonction. Toujours en suivant notre interprétation intuitive de la signification des séquents, on arrive aux règles suivantes, formulées pour la première fois pas Ketonen en 1944\footnote{Reprises ici du système $\mathbf{G3cp}$ introduit dans \cite{vPN01}.} :
+
+\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+    \prftree[r]{\iruleL{\land}}
+        {\Gamma,A,B \seq \Delta}
+        {\Gamma,A \land B \seq \Delta} &
+    \prftree[r]{\iruleR{\lor}}
+        {\Gamma \seq A,B,\Delta}
+        {\Gamma \seq A \lor B,\Delta}
+\end{longtabu}
+
+Encore une fois on peut facilement montrer que les versions irréversibles des règles sont dérivables des versions réversibles par simple application des règles d'affaiblissement. Cela donne par exemple pour {\iruleL{l\land}} :
+
+\begin{displaymath}
+    \prftree[r]{\iruleL{\land}}
+        {\prftree[r]{\iruleL{W}}
+            {\Gamma,A \seq \Delta}
+            {\Gamma,A,B \seq \Delta}}
+        {\Gamma,A \land B \seq \Delta}
+\end{displaymath}
+
+\section{Élimination des règles structurelles}
+
+\section{Des règles aux connecteurs réversibles}
+
+\section{La focalisation}
+
+\chapter{La ludique}
+
+\chapter{Applications à la pragmatique}
+
+\nocite{Tai68}
+\nocite{Lec11}
+\nocite{Gir03}
+\nocite{Gir06}
+
+\bibliographystyle{amsalpha}
+\bibliography{main}
+
+\end{document}
