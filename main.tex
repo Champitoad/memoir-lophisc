@@ -200,7 +200,7 @@ Néanmoins la propriété de la sous-formule ne suffit pas à éliminer le probl
 
 Ainsi, étant donné un séquent de la forme $\Gamma \seq A \lor B,\Delta$ prouvable dans $\mathbf{LKp}$, il n'est pas possible de déterminer si la prémisse qui nous a permis de le conclure est $\Gamma \seq A,\Delta$ ou $\Gamma \seq B,\Delta$, et il se peut que seulement l'une des deux soit prouvable dans $\mathbf{LKp}$ : on dit qu'il y a \emph{perte d'information} lors de l'application de la règle {\iruleR{l\lor}} ou {\iruleR{r\lor}}.\\
 
-La question est donc de savoir s'il est possible de remplacer les règles irréversibles de $\mathbf{LKp}$ par des règles réversibles afin d'éliminer le besoin d'effectuer du \emph{backtracking}, ce qui nous rapprocherait de la procédure de recherche effective recherchée. On peut déjà constater que de manière parfaitement symétrique, les deux règles gauches de la conjonction sont elles aussi irréversibles. Or si l'on se souvient de l'interprétation intuitive d'un séquent en termes de conjonction à gauche et de disjonction à droite, on peut être tenté de remplacer ces deux connecteurs par une simple "," de séparation des formules du séquent. De cette manière on tombe sur les deux règles d'affaiblissement, elles aussi irréversibles, ce qui suggère deux choses :
+La question est donc de savoir s'il est possible de remplacer les règles irréversibles de $\mathbf{LKp}$ par des règles réversibles afin d'éliminer le besoin d'effectuer du \emph{backtracking}, ce qui nous rapprocherait de la procédure de recherche effective voulue. On peut déjà constater que de manière parfaitement symétrique, les deux règles gauches de la conjonction sont elles aussi irréversibles. Or si l'on se souvient de l'interprétation intuitive d'un séquent en termes de conjonction à gauche et de disjonction à droite, on peut être tenté de remplacer ces deux connecteurs par une simple "," de séparation des formules du séquent. De cette manière on tombe sur les deux règles d'affaiblissement, elles aussi irréversibles, ce qui suggère deux choses :
 
 \begin{enumerate}
     \item Les règles de la conjonction et de la disjonction de $\mathbf{LKp}$ ne sont qu'une version logique des règles d'affaiblissement, permettant d'exprimer celles-ci à l'intérieur des formules. Si l'on interprète le calcul des séquents comme une théorie formelle de la relation de dérivabilité (comme cela a pu être fait dans \cite{vPN01}), c'est une façon de passer du méta-langage au langage objet.
@@ -277,6 +277,23 @@ Encore une fois on peut facilement montrer que les versions irréversibles des r
             {\Gamma,A \seq \Delta}
             {\Gamma,A,B \seq \Delta}}
         {\Gamma,A \land B \seq \Delta}
+\end{displaymath}
+
+On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un \textbf{système équivalent} à $\mathbf{LKp}$. Pour cela, on commence par montrer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
+
+\begin{displaymath}
+    \prftree[d]
+        {\prftree
+            {\Gamma,\Pi_1 \seq \Lambda_1,\Delta}
+            {\ldots}
+            {\Gamma,\Pi_n \seq \Lambda_n,\Delta}
+            {\Gamma,\ldots,\Gamma,\Pi \seq \Lambda,\Delta,\ldots,\Delta}}
+        {\Gamma,\Pi \seq \Lambda,\Delta}
+\end{displaymath}
+
+Cela permet de montrer la dérivabilité de la règle gauche de l'implication réversible introduite précédemment. Pour les règles de la conjonction et de la disjonction, la démonstration est similaire et se base là aussi sur l'application des règles de contraction. Cela donne par exemple pour {\iruleR{\lor}} :
+
+\begin{displaymath}
 \end{displaymath}
 
 \section{Élimination des règles structurelles}
