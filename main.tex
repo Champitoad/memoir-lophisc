@@ -195,7 +195,7 @@ On voit donc que pour concevoir une procédure de recherche effective, il va êt
 Néanmoins la propriété de la sous-formule ne suffit pas à éliminer le problème du \emph{backtracking} évoqué précédemment. Dans l'exemple donné, le problème venait des règles {\iruleR{l\lor}} et {\iruleR{r\lor}}, et plus précisément du fait qu'elles ne sont pas \textbf{réversibles} :
 
 \begin{definition}
-    On dit qu'une règle $\mathsf{R}$ est \emph{réversible} dans un système $\mathbf{D}$ lorsque pour toute instance $\mathsf{r}$ de $\mathsf{R}$ de prémisses $\sigma_1,\ldots,\sigma_n$ et de conclusion $\sigma$, si $\sigma$ est prouvable dans $\mathbf{D}$, alors $\sigma_i$ l'est aussi (pour $1 \leq i \leq n$).
+    On dit qu'une règle $\mathsf{R}$ est \emph{réversible} dans un système $\mathbf{D}$ lorsque pour toute instance $\mathsf{r}$ de $\mathsf{R}$, si la conclusion de $\mathsf{r}$ est prouvable dans $\mathbf{D}$, alors chacune des prémisses de $\mathsf{r}$ l'est aussi.
 \end{definition}
 
 Ainsi, étant donné un séquent de la forme $\Gamma \seq A \lor B,\Delta$ prouvable dans $\mathbf{LKp}$, il n'est pas possible de déterminer si la prémisse qui nous a permis de le conclure est $\Gamma \seq A,\Delta$ ou $\Gamma \seq B,\Delta$, et il se peut que seulement l'une des deux soit prouvable dans $\mathbf{LKp}$ : on dit qu'il y a \emph{perte d'information} lors de l'application de la règle {\iruleR{l\lor}} ou {\iruleR{r\lor}}.\\
@@ -233,7 +233,7 @@ Pour appuyer la seconde suggestion, il faudrait toutefois donner une explication
     avec $n > 1$.
 \end{definition}
 
-On constate alors qu'à partir du moment où une règle est à contextes indépendants, elle est irréversible. En effet, dans la présentation des règles donnée en définition, les $\Gamma_1,\ldots,\Gamma_n,\Delta_1,\ldots,\Delta_n$ peuvent correspondre à n'importe quel partitionnement du contexte du séquent conclusion si l'on se place dans le cadre d'une recherche \emph{root-first}; or seuls certains partitionnements permettent d'obtenir des prémisses prouvables, partitionnements qui ne peuvent être déterminées uniquement à partir de la conclusion.\\
+On constate alors qu'à partir du moment où une règle est à contextes indépendants, elle est irréversible. En effet, dans la présentation des règles donnée en définition, les $\Gamma_1,\ldots,\Gamma_n,\Delta_1,\ldots,\Delta_n$ peuvent correspondre à n'importe quel partitionnement du contexte du séquent conclusion si l'on se place dans le cadre d'une recherche \emph{root-first}; or seuls certains partitionnements permettent d'obtenir des prémisses prouvables, partitionnements qui ne peuvent être déterminés uniquement à partir de la conclusion.\\
 
 \emph{A contrario}, les règles à contextes partagés {\iruleL{\lor}} et {\iruleR{\land}} sont réversibles, notamment parce que ne se pose plus la question du partitionnement du contexte, qui est simplement dupliqué dans chaque prémisse. On peut en fait remarquer que les règles à contextes indépendants se dérivent facilement des règles à contextes partagés, par simples applications itérées des règles d'affaiblissement\footnote{Cette remarque est tirée de \cite{Cur05}.} (dénotées ici par la double ligne d'inférence) :
 
@@ -258,7 +258,7 @@ Tout cela suggère la version réversible et à contextes partagés suivante de 
         {\Gamma,A \lto B \seq \Delta}
 \end{displaymath}
 
-Afin de restreindre l'irréversibilité aux règles d'affaiblissement, il nous reste encore à trouver une version réversible des règles de la conjonction et de la disjonction. Toujours en suivant notre interprétation intuitive de la signification des séquents, on arrive aux règles suivantes, formulées pour la première fois pas Ketonen en 1944\footnote{Reprises ici du système $\mathbf{G3cp}$ introduit dans \cite{vPN01}.} :
+Afin de restreindre l'irréversibilité aux seules règles d'affaiblissement, il nous reste encore à trouver une version réversible des règles de la conjonction et de la disjonction. Toujours en suivant notre interprétation intuitive de la signification des séquents, on arrive aux règles suivantes :
 
 \begin{longtabu}{>{$}c<{$}>{$}c<{$}}
     \prftree[r]{\iruleL{\land}}
@@ -279,7 +279,7 @@ Encore une fois on peut facilement montrer que les versions irréversibles des r
         {\Gamma,A \land B \seq \Delta}
 \end{displaymath}
 
-On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un \textbf{système équivalent} à $\mathbf{LKp}$. Pour cela, on commence par montrer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
+On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un \textbf{système équivalent} à $\mathbf{LKp}$. Pour cela, on commence par remarquer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
 
 \begin{displaymath}
     \prftree[d]
