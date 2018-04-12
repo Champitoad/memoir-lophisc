@@ -9,7 +9,7 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{bm}
+\usepackage{colonequals}
 \usepackage{prftree}
 \usepackage{graphicx}
 \usepackage{pmboxdraw}
@@ -31,7 +31,6 @@
 
 \newcommand{\lto}{\Rightarrow}
 \newcommand{\lequiv}{\Leftrightarrow}
-\newcommand{\brtack}{\hspace{-0.40em}\rotatebox[origin=c]{90}{\pmboxdrawuni{252F}}\hspace{0.15em}}
 \newcommand{\seq}{\vdash}
 \newcommand{\irule}[1]{\footnotesize$#1$}
 \newcommand{\iruleL}[1]{\irule{{#1}\seq}}
@@ -147,24 +146,8 @@ Dans le groupe logique, on dispose de règles pour introduire chaque connecteur 
         {\Gamma \seq A \lor B,\Delta} \\ &
     \prftree[r]{\iruleR{r\lor}}
         {\Gamma \seq B,\Delta}
-        {\Gamma \seq A \lor B,\Delta} \\
-
-    %\prftree[r]{\iruleL{\forall}}
-        %{\Gamma,A[t/x] \seq \Delta}
-        %{\Gamma,\forall x A \seq \Delta} &
-    %\prftree[r]{\iruleR{\forall}}
-        %{\Gamma \seq A[y/x],\Delta}
-        %{\Gamma \seq \forall x A,\Delta} \\
-
-    %\prftree[r]{\iruleL{\exists}}
-        %{\Gamma,A[y/x] \seq \Delta}
-        %{\Gamma,\exists x A \seq \Delta} &
-    %\prftree[r]{\iruleR{\exists}}
-        %{\Gamma \seq A[t/x],\Delta}
-        %{\Gamma \seq \exists x A,\Delta}
+        {\Gamma \seq A \lor B,\Delta}
 \end{longtabu}
-
-%Pour les règles des quantificateurs, on est soumis aux contraintes usuelles associées au système de termes : $t$ doit être librement substituable à $x$ dans $A$, et $y$ doit être librement substituable à $x$ dans $A$ en plus d'être non-libre dans $\Gamma$ et $\Delta$.
 
 \section{Stratégies de recherche}
 
@@ -279,7 +262,7 @@ Encore une fois on peut facilement montrer que les versions irréversibles des r
         {\Gamma,A \land B \seq \Delta}
 \end{displaymath}
 
-On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un \textbf{système équivalent} à $\mathbf{LKp}$. Pour cela, on commence par remarquer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
+On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un système \textbf{équivalent} à $\mathbf{LKp}$. Pour cela, on commence par remarquer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
 
 \begin{displaymath}
     \prftree[d]
@@ -304,6 +287,12 @@ Cela permet de montrer la dérivabilité de la règle gauche de l'implication r�
 \end{displaymath}
 
 \section{Élimination des règles structurelles}
+
+Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mathbf{LKp}$ aux seules règles d'affaiblissement, en se plaçant dans un système équivalent où toutes les règles logiques sont réversibles. Néanmoins pour cela il a fallu montrer l'interdérivabilité des versions réversibles et irréversibles des règles logiques, qui n'est possible qu'à l'aide des règles structurelles d'affaiblissement et de contraction. Or pour atteindre une procédure de recherche véritablement effective, il semble nécessaire de se débarrasser d'une part de l'affaiblissement qui est source d'irréversibilité, mais aussi de la contraction qui est source de \textbf{non-déterminisme}. En effet, dans notre cadre de recherche \textit{root-first}, une instance de règle de contraction peut être choisie à n'importe quelle étape de la recherche, ce qui introduit la nécessité d'effectuer du \textit{backtracking} dans le cas où la recherche échoue à cause d'une contraction négligée par le passé, en plus d'une complexité accrue par la duplication des formules. Se présentent alors deux possibilités :
+\begin{enumerate}
+	\item Cacher les règles structurelles à l'intérieur d'autres règles réversibles, de façon à conserver le pouvoir déductif de $\mathbf{LKp}$. Cela revient essentiellement à remplacer l'axiome d'identité par une version contextuelle $\prfbyaxiom{\irule{id}}{\Gamma,A \seq A,\Delta}$. Si l'on ajoute une règle d'introduction du connecteur 0-aire pour le faux $\bot$ et que l'on remplace la négation par sa définition $\neg A \colonequals A \lto \bot$, on obtient le système $\mathbf{G3cp}$ introduit dans \cite{vPN01}. Une stratégie de recherche effective pour $\mathbf{G3cp}$ consiste alors à simplement décomposer les formules du séquent final jusqu'à tomber sur des instances de l'axiome d'identité contextuel. Cette stratégie est déterministe (modulo l'ordre d'application des règles) car pour un séquent $\sigma$ et une formule $A$ de $\sigma$ donnés, il existe au plus une instance de règle de formule principale $A$ et de conclusion $\sigma$ qui n'est pas une instance d'axiome.
+	\item Éliminer purement et simplement les règles d'affaiblissement et de contraction. On se retrouve alors dans un système de logique dite \emph{sous-structurelle}, qui a de fait un plus faible pouvoir déductif que $\mathbf{LKp}$.
+\end{enumerate}
 
 \section{Des règles aux connecteurs réversibles}
 
