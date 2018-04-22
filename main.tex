@@ -17,6 +17,8 @@
 \usepackage{longtable}
 \usepackage{tabu}
 \usepackage{multirow}
+\usepackage{pifont}
+\usepackage{cmll}
 
 \doublespacing
 
@@ -291,8 +293,47 @@ Cela permet de montrer la dérivabilité de la règle gauche de l'implication r�
 Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mathbf{LKp}$ aux seules règles d'affaiblissement, en se plaçant dans un système équivalent où toutes les règles logiques sont réversibles. Néanmoins pour cela il a fallu montrer l'interdérivabilité des versions réversibles et irréversibles des règles logiques, qui n'est possible qu'à l'aide des règles structurelles d'affaiblissement et de contraction. Or pour atteindre une procédure de recherche véritablement effective, il semble nécessaire de se débarrasser d'une part de l'affaiblissement qui est source d'irréversibilité, mais aussi de la contraction qui est source de \textbf{non-déterminisme}. En effet, dans notre cadre de recherche \textit{root-first}, une instance de règle de contraction peut être choisie à n'importe quelle étape de la recherche, ce qui introduit la nécessité d'effectuer du \textit{backtracking} dans le cas où la recherche échoue à cause d'une contraction négligée par le passé, en plus d'une complexité accrue par la duplication des formules. Se présentent alors deux possibilités :
 \begin{enumerate}
 	\item Cacher les règles structurelles à l'intérieur d'autres règles réversibles, de façon à conserver le pouvoir déductif de $\mathbf{LKp}$. Cela revient essentiellement à remplacer l'axiome d'identité par une version contextuelle $\prfbyaxiom{\irule{id}}{\Gamma,A \seq A,\Delta}$. Si l'on ajoute une règle d'introduction du connecteur 0-aire pour le faux $\bot$ et que l'on remplace la négation par sa définition $\neg A \colonequals A \lto \bot$, on obtient le système $\mathbf{G3cp}$ introduit dans \cite{vPN01}. Une stratégie de recherche effective pour $\mathbf{G3cp}$ consiste alors à simplement décomposer les formules du séquent final jusqu'à tomber sur des instances de l'axiome d'identité contextuel. Cette stratégie est déterministe (modulo l'ordre d'application des règles) car pour un séquent $\sigma$ et une formule $A$ de $\sigma$ donnés, il existe au plus une instance de règle de formule principale $A$ et de conclusion $\sigma$ qui n'est pas une instance d'axiome.
-	\item Éliminer purement et simplement les règles d'affaiblissement et de contraction. On se retrouve alors dans un système de logique dite \emph{sous-structurelle}, qui a de fait un plus faible pouvoir déductif que $\mathbf{LKp}$.
+	\item Éliminer purement et simplement les règles d'affaiblissement et de contraction. On se retrouve alors dans un système de logique dite \emph{sous-structurelle}, qui possède un plus faible pouvoir déductif que $\mathbf{LKp}$.
 \end{enumerate}
+
+Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{mono-latéral}. Le principe est de transformer les séquents de la forme $\Gamma \seq \Delta$ en $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), et donc de ne conserver que les règles droites. On gagne ainsi grandement en simplicité dans la recherche de preuve, puisque le calcul contient deux fois moins de règles. Toutefois cela est possible uniquement grâce aux équivalences de De Morgan, qui font un usage crucial des règles structurelles. En effet, si l'on essaie de prouver $\neg (A \land B) \seq \neg A \lor \neg B$ dans notre système sous-structurel en décomposant simplement les formules jusqu'aux axiomes, on bloque de la manière suivante :
+
+\begin{displaymath}
+    \prftree[r]{\iruleL{\neg}}
+        {\prftree[r]{\iruleR{\lor}}
+            {\prftree[r]{\iruleR{\land}}
+                {\prftree[r]{\iruleR{\neg}}
+                    {\prftree[r]{\iruleR{\neg}}
+                        {\prfsummary[\ding{53}]{A,B \seq A}}
+                        {A \seq A,\neg B}}
+                    {\seq A,\neg A,\neg B}}
+                {\prftree[r]{\iruleR{\neg}}
+                    {\prftree[r]{\iruleR{\neg}}
+                        {\prfsummary[\ding{53}]{B,A \seq B}}
+                        {B \seq B,\neg A}}
+                    {\seq B,\neg A,\neg B}}
+                {\seq A \land B,\neg A,\neg B}}
+            {\seq A \land B,\neg A \lor \neg B}}
+        {\neg (A \land B) \seq \neg A \lor \neg B}
+\end{displaymath}
+
+On voit que la règle à contextes partagés {\iruleR{\land}} nous oblige à distribuer le contexte $\neg A,\neg B$ dans les deux prémisses, ce qui fait qu'en l'absence d'affaiblissement il est impossible d'arriver à des instances d'axiome.\\
+
+Pour retrouver la symétrie du calcul en l'absence des règles structurelles, il est nécessaire de décomposer la conjonction et la disjonction en deux variantes dites \emph{multiplicatives} et \emph{additives} (cf. Tab. \ref{tab:conn_mall}), qui correspondent respectivement aux règles à contextes indépendants et partagés.
+
+\begin{table}[h]
+\begin{longtabu}{|>{\bf}c|c|c|}
+    \hline
+    \rowfont{\bfseries} & Multiplicative & Additive \\
+    \hline
+    Conjonction & $\otimes$ (\emph{fois}) & $\with$ (\emph{avec}) \\
+    \hline
+    Disjonction & $\parr$ (\emph{par}) & $\oplus$ (\emph{plus}) \\
+    \hline
+\end{longtabu}
+\caption{Connecteurs de $\mathbf{MALL}$}
+\label{tab:conn_mall}
+\end{table}
 
 \section{Des règles aux connecteurs réversibles}
 
