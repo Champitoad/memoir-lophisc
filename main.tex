@@ -298,7 +298,7 @@ Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mat
 
 Bien qu'on pourrait tout à fait se satisfaire de la première approche pour mettre en oeuvre une recherche de preuve effective en logique classique, c'est la deuxième approche qui se révèle la plus intéressante d'un point de vue théorique, et pour les fins visées dans ce mémoire. C'est en effet dans l'analyse de la dynamique qui prend place lorsque l'on optimise la recherche de preuves en logique linéaire que se dévoile le mécanisme de la \textbf{focalisation}, qui est au cœur de la ludique.
 
-\subsection{Calcul mono-latéral}
+\section{Des règles aux connecteurs réversibles}
 
 %Commençons par introduire le langage de $\mathbf{MALL}$, le fragment propositionnel et non-exponentiel de la logique linéaire \footnote{Les fragments exponentiel et du premier ordre ne nous seront d'aucune utilité pour les thèmes traités dans ce mémoire.} :
 
@@ -310,7 +310,17 @@ Bien qu'on pourrait tout à fait se satisfaire de la première approche pour met
 	%\end{itemize}
 %\end{definition}
 
-Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{mono-latéral}. Le principe est de transformer les séquents de la forme $\Gamma \seq \Delta$ en $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), et donc de ne conserver que les règles droites. On gagne ainsi grandement en simplicité dans la recherche de preuve, puisque le calcul contient deux fois moins de règles. Toutefois cela est possible uniquement grâce aux équivalences de De Morgan, qui font un usage crucial des règles structurelles. En effet, si l'on essaie de prouver $\neg (A \land B) \seq \neg A \lor \neg B$ dans notre système sous-structurel en décomposant mécaniquement les formules jusqu'aux axiomes, on bloque de la manière suivante :
+Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{monolatéral}. Le principe est de transformer les séquents bilatéraux de la forme $\Gamma \seq \Delta$ en séquents monolatéraux $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), afin de ne conserver que les règles droites. Les règles de la négation ayant pour fonction l'échange gauche/droite des formules à l'intérieur des séquents bilatéraux, on les supprime entièrement du calcul, ce qui nécessite de sortir la négation du langage : elle perd ainsi son statut de connecteur unaire et devient une fonction involutive sur l'ensemble des formules, définie inductivement de la manière suivante :
+
+\begin{itemize}
+    \item La négation d'un atome propositionnel $p$ est aussi un atome propositionnel, appelé \emph{dual} de $p$ et noté $\neg p$.
+    \item La négation des formules complexes est définie à l'aide des \emph{équations} de De Morgan (\ref{eq:DM}).
+        \begin{equation} \label{eq:DM}
+            \neg (A \land B) = \neg A \lor \neg B \qquad \neg (A \lor B) = \neg A \land \neg B \qquad
+        \end{equation}
+\end{itemize}
+
+On gagne ainsi grandement en simplicité dans la recherche de preuve, puisque le calcul contient deux fois moins de règles. Toutefois cela est possible uniquement grâce à la prouvabilité dans $\mathbf{LKp}$ des \emph{équivalences} de De Morgan, qui fait un usage crucial des règles structurelles. En effet, si l'on essaie de prouver $\neg (A \land B) \seq \neg A \lor \neg B$ dans notre système sous-structurel réversible en décomposant mécaniquement les formules jusqu'aux axiomes, on bloque de la manière suivante :
 
 \begin{displaymath}
     \prftree[r]{\iruleL{\neg}}
@@ -349,7 +359,70 @@ Pour retrouver la symétrie du calcul en l'absence des règles structurelles, il
 \label{tab:conn_mall}
 \end{table}
 
-\section{Des règles aux connecteurs réversibles}
+On peut maintenant reformuler les règles logiques de notre système sous-structurel réversible dans ce nouveau langage, en faisant comme mentionné tout à l'heure exception de l'implication\footnote{Ce choix est justifié d'une part par la difficulté à définir de façon symétrique et au sein d'un même système une variante multiplicative et additive de l'implication (voir \cite{OP99} pour un traitement de la question à l'aide de la logique sous-structurelle $\mathbf{BI}$); et d'autre part car cela n'est pas utile au développement du mécanisme de focalisation.}\footnote{On reprend ici la notation de la négation à l'aide du symbole $\bot$ en exposant des formules introduite par Girard, car elle permet de faire le lien entre la négation de la logique linéaire et la notion d'\emph{orthogonalité} centrale en ludique.} :
+
+\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+    \prftree[r]{\iruleL{\cdot^\bot}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma,A^\bot \seq \Delta} &
+    \prftree[r]{\iruleR{\cdot^\bot}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma \seq A^\bot,\Delta} \\
+
+    \prftree[r]{\iruleL{\otimes}}
+        {\Gamma,A,B \seq \Delta}
+        {\Gamma,A \otimes B \seq \Delta} &
+    \prftree[r]{\iruleR{\with}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma \seq B,\Delta}
+        {\Gamma \seq A \with B,\Delta} \\
+
+    \prftree[r]{\iruleL{\oplus}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma,B \seq \Delta}
+        {\Gamma,A \oplus B \seq \Delta} &
+    \prftree[r]{\iruleR{\parr}}
+        {\Gamma \seq A,B,\Delta}
+        {\Gamma \seq A \parr B,\Delta}
+\end{longtabu}
+
+Afin de pouvoir formuler un calcul monolatéral équivalent, il nous reste encore à montrer que les équivalences de De Morgan multiplicatives (\ref{eq:mul_DM}) et additives (\ref{eq:add_DM}) sont prouvables dans le système. Or il se trouve qu'elles ne le sont pas, ce qui est dû au fait que nous nous sommes limités, dans notre quête d'un algorithme de recherche de preuve effectif, aux règles réversibles. Par exemple si l'on veut prouver $(A \otimes B)^\bot \seq A^\bot \parr B^\bot$, on est obligé de décomposer $A \otimes B$ à droite du séquent, ce qui n'est pas possible sans la règle {\iruleR{\otimes}}.
+\begin{align}
+    (A \otimes B)^\bot \equiv A^\bot \parr B^\bot &\qquad (A \parr B)^\bot \equiv A^\bot \otimes B^\bot \label{eq:mul_DM} \\
+    (A \with B)^\bot \equiv A^\bot \oplus B^\bot &\qquad (A \oplus B)^\bot \equiv A^\bot \with B^\bot \label{eq:add_DM}
+\end{align}
+Dans l'objectif de retrouver les équivalences de De Morgan (ainsi qu'un peu de pouvoir déductif), nous allons donc rajouter les règles symétriques et irréversibles manquantes, ce qui nous place très exactement dans le calcul bilatéral de $\mathbf{MALL}$ :
+
+\begin{center}
+    \begin{tabu}{>{$}c<{$}>{$}c<{$}}
+    \prftree[r]{\iruleL{l\with}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma,A \with B \seq \Delta} &
+    \multirow{2}{*}{
+    \prftree[r]{\iruleR{\otimes}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma' \seq B,\Delta'}
+        {\Gamma,\Gamma' \seq A \otimes B,\Delta,\Delta'}} \\
+    \prftree[r]{\iruleL{r\with}}
+        {\Gamma,B \seq \Delta}
+        {\Gamma,A \with B \seq \Delta} & \\
+
+    \multirow{2}{*}{
+    \prftree[r]{\iruleL{\parr}}
+        {\Gamma,A \seq \Delta}
+        {\Gamma',B \seq \Delta'}
+        {\Gamma,\Gamma',A \parr B \seq \Delta,\Delta'}} &
+    \prftree[r]{\iruleR{l\oplus}}
+        {\Gamma \seq A,\Delta}
+        {\Gamma \seq A \oplus B,\Delta} \\ &
+    \prftree[r]{\iruleR{r\oplus}}
+        {\Gamma \seq B,\Delta}
+        {\Gamma \seq A \oplus B,\Delta}
+\end{tabu}
+\end{center}
+
+À partir de là il est facile de formuler le calcul monolatéral de $\mathbf{MALL}$, en procédant de la même manière que pour $\mathbf{LKp}$. Chaque connecteur ne possédant plus qu'une règle qui lui est associée\footnote{Deux pour $\oplus$, mais qui possèdent les mêmes propriétés.}, on peut maintenant parler de \emph{connecteurs (ir)réversibles}, ce qui va s'avérer très important pour définir la focalisation. Ainsi $\otimes$ et $\oplus$ sont-ils irréversibles, tandis que $\with$ et $\parr$ sont réversibles\footnote{On voit ici la justification du choix des symboles, les connecteurs de même polarité n'étant que la version retournée l'un de l'autre. On notera toutefois que cette justification n'est venue qu'\textit{a posteriori}, l'étude de la polarisation ayant eu lieu après la découverte de la logique linéaire.}.
+
 
 \section{La focalisation}
 
