@@ -313,7 +313,7 @@ Bien qu'on pourrait tout à fait se satisfaire de la première approche pour met
 Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{monolatéral}. Le principe est de transformer les séquents bilatéraux de la forme $\Gamma \seq \Delta$ en séquents monolatéraux $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), afin de ne conserver que les règles droites. Les règles de la négation ayant pour fonction l'échange gauche/droite des formules à l'intérieur des séquents bilatéraux, on les supprime entièrement du calcul, ce qui nécessite de sortir la négation du langage : elle perd ainsi son statut de connecteur unaire et devient une fonction involutive sur l'ensemble des formules, définie inductivement de la manière suivante :
 
 \begin{itemize}
-    \item La négation d'un atome propositionnel $p$ est aussi un atome propositionnel, appelé \emph{dual} de $p$ et noté $\neg p$.
+    \item La négation d'un atome propositionnel \emph{positif} $p$ est l'atome propositionnel \emph{négatif} $\neg p$.
     \item La négation des formules complexes est définie à l'aide des \emph{équations} de De Morgan (\ref{eq:DM}).
         \begin{equation} \label{eq:DM}
             \neg (A \land B) = \neg A \lor \neg B \qquad \neg (A \lor B) = \neg A \land \neg B \qquad
@@ -421,8 +421,12 @@ Dans l'objectif de retrouver les équivalences de De Morgan (ainsi qu'un peu de 
 \end{tabu}
 \end{center}
 
-À partir de là il est facile de formuler le calcul monolatéral de $\mathbf{MALL}$, en procédant de la même manière que pour $\mathbf{LKp}$. Chaque connecteur ne possédant plus qu'une règle qui lui est associée\footnote{Deux pour $\oplus$, mais qui possèdent les mêmes propriétés.}, on peut maintenant parler de \emph{connecteurs (ir)réversibles}, ce qui va s'avérer très important pour définir la focalisation. Ainsi $\otimes$ et $\oplus$ sont-ils irréversibles, tandis que $\with$ et $\parr$ sont réversibles\footnote{On voit ici la justification du choix des symboles, les connecteurs de même polarité étant la version retournée l'un de l'autre. On notera toutefois que cette justification n'est venue qu'\textit{a posteriori}, l'étude de la polarisation ayant eu lieu après la découverte de la logique linéaire.}.
+À partir de là il est facile de formuler le calcul monolatéral de $\mathbf{MALL}$, en procédant de la même manière que pour $\mathbf{LKp}$. Chaque connecteur ne possédant plus qu'une règle qui lui est associée\footnote{Deux pour $\oplus$, mais qui possèdent les mêmes propriétés.}, on peut alors parler de \emph{connecteurs (ir)réversibles}, ce qui va s'avérer très important pour définir la focalisation. Ainsi $\otimes$ et $\oplus$ sont-ils irréversibles, tandis que $\with$ et $\parr$ sont réversibles. On parle aussi parfois de connecteurs \textbf{positifs} et \textbf{négatifs}, en relation à la notion de \emph{polarité} qui étend la réversibilité aux formules\footnote{On voit ici la justification du choix des symboles, les connecteurs de même polarité étant la version retournée l'un de l'autre. On notera toutefois que cette justification n'est venue qu'\textit{a posteriori}, l'étude de la polarisation ayant eu lieu après la découverte de la logique linéaire.} :
 
+\begin{definition}[Polarité]
+	On dit qu'une formule $A$ est \emph{positive} lorsque $A$ est un atome propositionnel positif, ou lorsque le connecteur principal de $A$ est irréversible.
+	On dit qu'une formule $A$ est \emph{négative} lorsque $A$ est un atome propositionnel négatif, ou lorsque le connecteur principal de $A$ est réversible.
+\end{definition}
 
 \section{La focalisation}
 
