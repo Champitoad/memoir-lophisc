@@ -49,7 +49,7 @@
 
 La \textbf{ludique} est une théorie inventée par le mathématicien Jean-Yves Girard qui se propose de refonder la logique autour de la notion d'\emph{interaction}. Elle s'inscrit directement dans la tradition de la théorie de la démonstration, et ce de deux façons : d'abord par son origine historique et technique, qui est la découverte de la \emph{focalisation} par Andreoli \cite{And92} dans le cadre de ses recherches sur la programmation logique linéaire; puis par la place centrale accordée aux \emph{desseins}, les objets primitifs de la ludique, qui correspondent à une sorte de généralisation/abstraction des preuves formelles. La ludique a été introduite extensivement par Girard dans son article \textit{Locus Solum} \cite{Gir01}. Cet article apparaît comme l'un des premiers où l'auteur n'hésite pas à complémenter les résultats mathématiques par des réflexions philosophiques plus personnelles : on est particulièrement marqué par le positionnement très tranché sur les théories logiques concurrentes, ainsi que par le style de rédaction assez excentrique pour un article académique.\\
 
-Outre ces quelques originalités --- que l'on retrouve jusque dans les choix terminologiques ---, la ludique a su démontrer son intérêt scientifique, à la fois du point de vue de la logique pure, et des applications à d'autres domaines tels que l'informatique et la linguistique. Dans le premier cas, on peut attribuer ce succès à deux résultats de complétude qui constituent une véritable justification technique de la pertinence de la ludique en tant que système logique\footnote{Il convient toutefois de mentionner que certains fragments de la logique usuelle n'ont pas encore trouvé de reconstruction ludique, ce qui relativise l'intérêt fondationnel de la théorie. C'est une des raisons qui ont poussé Girard à développer un cadre plus proche des mathématiques standards : la \textit{Géométrie de l'Interaction}.}. Dans le cas des applications extra-logiques, on constate une forte interaction avec l'informatique que l'on doit principalement à l'héritage de la logique linéaire : on a non seulement des travaux tels que \cite{Sau08} qui étendent le travail original d'Andreoli en programmation logique au cadre ludique, mais aussi des tentatives plus originales avec \cite{Ter11} qui se sert de la ludique pour reformuler dans un cadre unifié des résultats de théorie de la calculabilité/complexité, ou encore \cite{Fou11} qui propose de modéliser les interactions entre les différents agents du Web à l'aide de la ludique. Néanmoins les applications qui vont nous préoccuper dans ce mémoire relèvent de la linguistique théorique, et plus particulièrement de la \emph{pragmatique}. Les desseins mentionnés précédemment peuvent en effet être interprétés comme des stratégies argumentatives dans le cadre d'une interaction \emph{dialogique}, fournissant une approche formelle et computationnelle à l'étude du langage en tant que pratique intersubjective ancrée dans l'espace et le temps.\\
+Outre ces quelques originalités --- que l'on retrouve jusque dans les choix terminologiques ---, la ludique a su démontrer son intérêt scientifique, à la fois du point de vue de la logique pure, et des applications à d'autres domaines tels que l'informatique et la linguistique. Dans le premier cas, on peut attribuer ce succès à deux résultats de complétude qui constituent une véritable justification technique de la pertinence de la ludique en tant que système logique\footnote{Il convient toutefois de mentionner que certains fragments de la logique usuelle n'ont pas encore trouvé de reconstruction ludique, ce qui relativise l'intérêt fondationnel de la théorie. C'est une des raisons qui ont poussé Girard à développer un cadre plus proche des mathématiques standards : la \textit{Géométrie de l'Interaction}.}. Dans le cas des applications extra-logiques, on constate une forte interaction avec l'informatique que l'on doit principalement à l'héritage de la logique linéaire : on a non seulement des travaux tels que \cite{Sau08} qui étendent le travail original d'Andreoli en programmation logique au cadre ludique, mais aussi des tentatives plus originales avec \cite{Ter11} qui se sert de la ludique pour reformuler dans un cadre unifié des résultats de théorie de la calculabilité/complexité, ou encore \cite{Fou11} qui propose de modéliser les interactions entre les différents agents du Web à l'aide de la ludique. Pour ce qui est de la linguistique, les applications actuelles sont plus particulièrement ciblés vers la \emph{pragmatique}. Les desseins mentionnés précédemment peuvent en effet être interprétés comme des stratégies argumentatives dans le cadre d'une interaction \emph{dialogique}, fournissant une approche formelle et computationnelle à l'étude du langage en tant que pratique intersubjective ancrée dans l'espace et le temps.\\
 
 L'objectif premier de ce mémoire est de donner une présentation intégrée des motivations historiques et conceptuelles qui ont donné naissance à la ludique, en prenant pour fil rouge la problématique de la recherche automatique de preuves en calcul des séquents. On sera alors naturellement amené à envisager un système logique doué de la propriété de focalisation, qui lorsqu'elle est prise comme primitive donne lieu à la ludique. On introduira ensuite les concepts de base de la théorie abordés du point de vue des applications à la pragmatique, où l'on s'intéressera à la modélisation formelle des dialogues et de leur dynamique.
 
@@ -63,7 +63,7 @@ Avec l'arrivée de l'informatique, on s'intéressa de plus en plus aux propriét
 
 Historiquement, le premier formalisme adopté en théorie de la démonstration afin de représenter les preuves est celui des \emph{systèmes à la Hilbert}. De nature axiomatique, ces derniers ne comprennent que très peu de règles d'inférence --- souvent uniquement le \textit{modus ponens} ---, et se prêtent donc mal à un usage pratique visant à raisonner à l'intérieur du système. De plus, cette simplicité structurelle des démonstrations formelles en fait des objets assez pauvres d'un point de vue mathématique, et donc peu aptes à concurrencer les approches sémantiques alors particulièrement prisées à l'époque. C'est très probablement ce qui a poussé Gentzen à mettre au point deux systèmes de déduction alternatifs : la \emph{déduction naturelle} dans un premier temps, puis le \emph{calcul des séquents}.\\
 
-Les deux systèmes ont en commun d'être construits autour d'un unique axiome (ou schéma d'axiomes), déplaçant tout le contenu logique auparavant exprimé au niveau des formules directement dans les règles d'inférences, donc dans la structure même des démonstrations. Alors que la déduction naturelle tente de coller le plus possible à la façon dont le mathématicien raisonne en pratique, le calcul des séquents n'a été introduit que comme outil technique pour prouver le \textit{Haupstatz} ou \emph{théorème d'élimination des coupures}, que Gentzen n'arrivait pas à formuler en déduction naturelle, et n'apparaît donc pas de prime abord très adapté en tant qu'outil pratique pour la recherche de preuves. Or il se trouve que les preuves sans coupures, qui d'après le \textit{Haupstatz} quotientent l'ensemble des preuves sans perte de puissance déductive, possèdent des propriétés particulièrement intéressantes pour la recherche de preuves, notamment la \emph{propriété de la sous-formule} : celle-ci garantit qu'à toute étape de la déduction, les formules apparaissant dans les prémisses sont contenues dans les formules apparaissant dans la conclusion, ce qui réduit considérablement l'espace de recherche (en supposant que l'on parte de la conclusion).\\
+Les deux systèmes ont en commun d'être construits autour d'un unique axiome, déplaçant tout le contenu logique auparavant exprimé au niveau des formules directement dans les règles d'inférence, donc dans la structure même des démonstrations. Alors que la déduction naturelle tente de coller le plus possible à la façon dont le mathématicien raisonne en pratique, le calcul des séquents n'a été introduit que comme outil technique pour prouver le \textit{Haupstatz} ou \emph{théorème d'élimination des coupures}, que Gentzen n'arrivait pas à formuler en déduction naturelle, et n'apparaît donc pas de prime abord très adapté en tant qu'outil pratique pour la recherche de preuves. Or il se trouve que les preuves sans coupures, qui d'après le \textit{Haupstatz} quotientent l'ensemble des preuves sans perte de puissance déductive, possèdent des propriétés particulièrement intéressantes pour la recherche de preuves, notamment la \emph{propriété de la sous-formule} : celle-ci garantit qu'à toute étape de la déduction, les formules apparaissant dans les prémisses sont contenues dans les formules apparaissant dans la conclusion, ce qui réduit considérablement l'espace de recherche (en supposant que l'on parte de la conclusion).\\
 
 Tout cela peut néanmoins sembler un peu abscon pour qui n'a pas déjà une bonne connaissance du calcul des séquents : on présente donc le système $\mathbf{LKp}$, qui correspond au système $\mathbf{LK}$ de Gentzen\footnote{\cite{Gen35}, pp. 190-193} réduit au cadre propositionnel, et qui sera le point de départ de notre réflexion sur la recherche de preuves. On commence par définir la notion de \emph{séquent} :
 
@@ -156,7 +156,7 @@ Dans le groupe logique, on dispose de règles pour introduire chaque connecteur 
 
 \chapter*{Stratégies de recherche}
 
-Lorsque l'on procède à la recherche d'une preuve pour un séquent donné, plusieurs stratégies sont envisageables : les premières, que l'on pourrait qualifier de \emph{top-down}\footnote{En référence au sens dans lequel s'effectue traditionnellement les dérivations.}, consistent à partir d'axiomes qui nous semblent pertinents, puis à utiliser les règles du système adopté pour produire un certain nombre de dérivations que l'on va pouvoir composer entre elles, et ce jusqu'à arriver à la conclusion recherchée. C'est ce genre de méthode heuristique qui est utilisé en pratique en mathématiques\footnote{En remplaçant le plus souvent les axiomes par des lemmes ou des hypothèses.}, ou encore dans les systèmes à la Hilbert. Or contrairement à ces derniers, les systèmes de calcul des séquents possèdent très peu d'axiomes, et se prêtent donc assez mal à ce type de stratégie. En revanche on vient de voir qu'ils comportent beaucoup de règles de dérivation, parfois plusieurs pour un même connecteur. Cette propriété les rend particulièrement adaptés aux stratégies de recherche dites \textbf{root-first} (ou, par opposition aux premières, \emph{bottom-up}), que l'on peut résumer très succintement par l'algorithme suivant :\\
+Lorsque l'on procède à la recherche d'une preuve pour un séquent donné, plusieurs stratégies sont envisageables : les premières, que l'on pourrait qualifier de \emph{top-down}\footnote{En référence au sens dans lequel s'effectue traditionnellement les dérivations.}, consistent à partir d'instances d'axiomes qui nous semblent pertinentes, puis à utiliser les règles du système adopté pour produire un certain nombre de dérivations que l'on va pouvoir composer entre elles, et ce jusqu'à arriver à la conclusion recherchée. C'est ce genre de méthode heuristique qui est utilisé en pratique en mathématiques\footnote{En remplaçant le plus souvent les axiomes par des lemmes ou des hypothèses.}, ou encore dans les systèmes à la Hilbert. Or contrairement à ces derniers, les systèmes de calcul des séquents possèdent très peu d'axiomes, et se prêtent donc assez mal à ce type de stratégie. En revanche on vient de voir qu'ils comportent beaucoup de règles de dérivation, parfois plusieurs pour un même connecteur. Cette propriété les rend particulièrement adaptés aux stratégies de recherche dites \textbf{root-first} (ou, par opposition aux premières, \emph{bottom-up}), que l'on peut résumer très succintement par l'algorithme suivant :\\
 
 Soit $\sigma$ le séquent que l'on cherche à prouver, appelé \emph{séquent final}.
 \begin{enumerate}
@@ -170,7 +170,7 @@ Soit $\sigma$ le séquent que l'on cherche à prouver, appelé \emph{séquent fi
 ~\\
 On voit donc que ces stratégies se décrivent bien de manière algorithmique, ce qui laisse penser qu'on pourrait trouver une procédure de recherche effective, c'est-à-dire qui \emph{termine}, pour notre système $\mathbf{LKp}$. On constate toutefois en pratique qu'un certain nombre d'obstacles empêchent l'existence d'une telle procédure, obstacles qui se manifestent essentiellement dès la première étape de notre algorithme : en effet, comment déterminer si une instance de règle $\mathsf{r}$ est applicable en ayant pour unique information son séquent conclusion ? Il est tout à fait possible que $\mathsf{r}$ soit valide à un niveau \emph{local}, mais inapplicable à un niveau \emph{global}, au sens où elle ne permet pas d'aboutir à une preuve du séquent final.\\
 
-Prenons pour exemple le séquent $p \seq p \lor q$. La seule preuve de ce séquent consiste en une simple application de la règle {\iruleR{l\lor}}, qui amène à l'axiome $p \seq p$. En suivant une implémentation naïve de notre algorithme qui incluerait dans $L$ l'ensemble des instances de règles valides, on pourrait très bien opter pour une instance de la règle {\iruleR{r\lor}}, qui nous amènerait au séquent $p \seq q$ pour lequel il n'existe aucune instance de règle valide. Dans ce cas très simple, une solution un peu "brutale" consisterait à effectuer du \emph{backtracking}, c'est-à-dire revenir en arrière et essayer une autre instance de règle valide sur $p \seq p \lor q$. Néanmoins dans des cas plus complexes, le \emph{backtracking} se révèle vite impraticable du fait qu'il est très difficile de déterminer à quel séquent antérieur recommencer la recherche afin d'obtenir une preuve du séquent final; sans compter les problèmes de complexité combinatoire quand $L$ contient beaucoup d'éléments.
+Prenons pour exemple le séquent $p \seq p \lor q$. La seule preuve de ce séquent consiste en une simple application de la règle {\iruleR{l\lor}}, qui amène à l'instance d'axiome $p \seq p$. En suivant une implémentation naïve de notre algorithme qui incluerait dans $L$ l'ensemble des instances de règles valides, on pourrait très bien opter pour une instance de la règle {\iruleR{r\lor}}, qui nous amènerait au séquent $p \seq q$ pour lequel il n'existe aucune instance de règle valide. Dans ce cas très simple, une solution un peu "brutale" consisterait à effectuer du \emph{backtracking}, c'est-à-dire revenir en arrière et essayer une autre instance de règle valide sur $p \seq p \lor q$. Néanmoins dans des cas plus complexes, le \emph{backtracking} se révèle vite impraticable du fait qu'il est très difficile de déterminer à quel séquent antérieur recommencer la recherche afin d'obtenir une preuve du séquent final; sans compter les problèmes de complexité combinatoire quand $L$ contient beaucoup d'éléments.
 
 \chapter*{Réversibilité classique}
 
@@ -302,16 +302,6 @@ Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mat
 Bien qu'on pourrait tout à fait se satisfaire de la première approche pour mettre en oeuvre une recherche de preuves effective en logique classique, c'est la deuxième approche qui se révèle la plus intéressante d'un point de vue théorique, et pour les fins visées dans ce mémoire. C'est en effet dans l'analyse de la dynamique qui prend place lorsque l'on optimise la recherche de preuves en logique linéaire que se dévoile le mécanisme de la \textbf{focalisation}, qui est au cœur de la ludique.
 
 \chapter*{Des règles aux connecteurs réversibles}
-
-%Commençons par introduire le langage de $\mathbf{MALL}$, le fragment propositionnel et non-exponentiel de la logique linéaire \footnote{Les fragments exponentiel et du premier ordre ne nous seront d'aucune utilité pour les thèmes traités dans ce mémoire.} :
-
-%\begin{definition}
-	%Une \emph{formule} est définie inductivement comme étant soit :
-	%\begin{itemize}
-		%\item Un atome propositionnel $p$ ou son \emph{dual} $p^{\bot}$;
-		%\item Une formule binaire $A * B$, où $A$ et $B$ sont des formules et $\ast$ est un connecteur parmi $\otimes,\oplus,\with,\parr$.
-	%\end{itemize}
-%\end{definition}
 
 Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{monolatéral}. Le principe est de transformer les séquents bilatéraux de la forme $\Gamma \seq \Delta$ en séquents monolatéraux $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), afin de ne conserver que les règles droites. Les règles de la négation ayant pour fonction l'échange gauche/droite des formules à l'intérieur des séquents bilatéraux, on les supprime entièrement du calcul, ce qui nécessite de sortir la négation du langage : elle perd ainsi son statut de connecteur unaire et devient une fonction involutive sur l'ensemble des formules, définie inductivement de la manière suivante :
 
@@ -464,7 +454,7 @@ Cette preuve n'est pas focalisée, car une fois la formule $A \otimes (B \otimes
 \end{displaymath}
 Cette preuve est focalisée à condition que les formules $F$ et $G$ ne soit pas négatives et non-atomiques, auquel cas selon la condition de priorité de la phase asynchrone elles auraient dûes être décomposées en premier.\\
 
-Dans son article \cite{And92}, Andreoli montre que l'ensemble des preuves focalisées formalisées dans son système $\bm{\Sigma}_{\mathbf{3}}$ est un sous-ensemble complet des preuves de $\mathbf{LL}$, c'est-à-dire qu'il existe une preuve focalisée pour chaque formule dérivable dans $\mathbf{LL}$. Le théorème s'applique facilement à $\mathbf{MALL}$ qui est un sous-système de $\mathbf{LL}$, ce qui signifie que l'on peut effectivement quotienter l'espace de recherche par ces preuves focalisées. Il est intéressant de remarquer qu'Andreoli arrive à ce résultat de manière parfaitement constructive, de sorte qu'il est en principe possible d'extraire de la démonstration qu'il donne une procédure mécanique permettant de transformer n'importe quelle preuve de $\mathbf{LL}$ en une preuve de $\bm{\Sigma}_{\mathbf{3}}$. On peut ici faire le parallèle avec le \textit{Haupstatz}\footnote{Qui par ailleurs reste valide dans $\mathbf{MALL}$.} évoqué plus tôt, qui de manière similaire permet de restreindre l'espace des preuves via la procédure d'\emph{élimination des coupures}. On comprend alors mieux l'intérêt porté par Girard sur ce mécanisme de focalisation, compte-tenu de la place centrale qu'il accordait déjà au $Haupstatz$ dans ses travaux en théorie de la démonstration, au point de rejeter tout système de calcul des séquents ne vérifiant pas ce théorème.\\
+Dans son article \cite{And92}, Andreoli montre que l'ensemble des preuves focalisées formalisées dans son système $\bm{\Sigma_3}$ est un sous-ensemble complet des preuves de $\mathbf{LL}$, c'est-à-dire qu'il existe une preuve focalisée pour chaque formule dérivable dans $\mathbf{LL}$. Le théorème s'applique facilement à $\mathbf{MALL}$ qui est un sous-système de $\mathbf{LL}$, ce qui signifie que l'on peut effectivement quotienter l'espace de recherche par ces preuves focalisées. Il est intéressant de remarquer qu'Andreoli arrive à ce résultat de manière parfaitement constructive, de sorte qu'il est en principe possible d'extraire de la démonstration qu'il donne une procédure mécanique permettant de transformer n'importe quelle preuve de $\mathbf{LL}$ en une preuve de $\bm{\Sigma_3}$. On peut ici faire le parallèle avec le \textit{Haupstatz}\footnote{Qui par ailleurs reste valide dans $\mathbf{MALL}$.} évoqué plus tôt, qui de manière similaire permet de restreindre l'espace des preuves via la procédure d'\emph{élimination des coupures}. On comprend alors mieux l'intérêt porté par Girard sur ce mécanisme de focalisation, compte-tenu de la place centrale qu'il accordait déjà au $Haupstatz$ dans ses travaux en théorie de la démonstration, au point de rejeter tout système de calcul des séquents ne vérifiant pas ce théorème.\\
 
 On a donc vu que les preuves focalisées consistent en une succession de "blocs" d'applications de règles réversibles lors de la phase asynchrone, et irréversibles lors de la phase synchrone. On reconnaît ici la forme d'un dialogue entre deux processus qui interagiraient chacun leur tour dans une sorte de jeu démonstratif, rejoignant les interprétations ludiques de la logique tels que la logique dialogique de Lorenzen ou la sémantique des jeux GTS de Hintikka. Toutefois pour rendre cette correspondance plus claire et plus précise, il serait commode de pouvoir réduire ces blocs de règles multiples en instances d'une unique règle associée à chaque phase/processus/joueur. Or pour réduire notre système à deux règles, une positive pour $\otimes,\oplus$ et une négative pour $\with,\parr$, il est d'abord nécessaire de trouver deux formes "normales" des formules de $\mathbf{MALL}$ auxquelles toute formule de l'une ou l'autre polarité peut-être ramenée. Pour cela on peut faire appel à la distributivité des connecteurs multiplicatifs sur les additifs :
 \begin{align}
@@ -487,7 +477,7 @@ Essayons maintenant de généraliser les blocs de règles évoqués précédemme
 \end{displaymath}
 Ce qui revient à donner une dérivation de la règle négative :
 \begin{displaymath}
-	\prftree[r]{$-$}
+	\prftree[r]{\irule{\with\parr}}
 		{\seq A_{1,1},\ldots,A_{1,n_1},\Delta}
 		{\ldots}
 		{\seq A_{k,1},\ldots,A_{k,n_k},\Delta}
@@ -506,41 +496,137 @@ Pour la phase synchrone, on peut assumer que toute les formules négatives non-a
 \end{displaymath}
 Ce qui revient à donner une dérivation du schéma de règles positives :
 \begin{displaymath}
-	\prftree[r]{$+_p$}
+	\prftree[r]{\irule{\oplus\otimes_p}}
 		{\seq A_{p,1},\Delta_1}
 		{\ldots}
 		{\seq A_{p,n_p},\Delta_{n_p}}
 	{\seq \bigoplus_{1 \leqslant i \leqslant k} \bigotimes_{1 \leqslant j \leqslant n_i} A_{i,j},\Delta}
 \end{displaymath}
 
-% TODO: donner une version "pitchfork" des règles.
+Maintenant si l'on s'autorise à revenir à un système de séquents bilatéraux tout en conservant la définition de la négation comme fonction involutive sur l'ensemble des formules, on peut obtenir les schémas de dérivations suivants :
+\begin{displaymath}
+	\prftree[r]{\iruleL{\cdot^\bot}}
+		{\prftree[r]{\irule{\with\parr}}
+			{\seq A_{1,1},\ldots,A_{1,n_1},\Delta}
+			{\ldots}
+			{\seq A_{k,1},\ldots,A_{k,n_k},\Delta}
+			{\seq \bigwith_{1 \leqslant i \leqslant k} \bigparr_{1 \leqslant j \leqslant n_i} A_{i,j},\Delta}}
+		{\bigoplus_{1 \leqslant i \leqslant k} \bigotimes_{1 \leqslant j \leqslant n_i} A_{i,j}^\bot \seq \Delta}
+\end{displaymath}
+\begin{displaymath}
+	\prftree[r]{\irule{\oplus\otimes_p}}
+		{\prftree[r]{\iruleR{\cdot^\bot}}
+			{A_{p,1} \seq \Delta_1}
+			{\seq A_{p,1}^\bot,\Delta_1}}
+		{\ldots}
+		{\prftree[r]{\iruleR{\cdot^\bot}}
+			{A_{p,n_p} \seq \Delta_{n_p}}
+			{\seq A_{p,n_p}^\bot,\Delta_{n_p}}}
+		{\seq \bigoplus_{1 \leqslant i \leqslant k} \bigotimes_{1 \leqslant j \leqslant n_i} A_{i,j}^\bot,\Delta}
+\end{displaymath}
+Cela nous permet de donner une formulation bilatérale des règles positives et négative, dans laquelle les formules décomposées (ou introduites en lecture \textit{top-down}) sont toujours en forme normale positive :
+\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+	\prftree[r]{\iruleL{\oplus\otimes}}
+		{\seq A_{1,1},\ldots,A_{1,n_1},\Delta}
+		{\ldots}
+		{\seq A_{k,1},\ldots,A_{k,n_k},\Delta}
+		{\bigoplus_{1 \leqslant i \leqslant k} \bigotimes_{1 \leqslant j \leqslant n_i} A_{i,j}^\bot \seq \Delta} &
+	\prftree[r]{\iruleR{\oplus\otimes_p}}
+		{A_{p,1} \seq \Delta_1}
+		{\ldots}
+		{A_{p,n_p} \seq \Delta_1}
+		{\seq \bigoplus_{1 \leqslant i \leqslant k} \bigotimes_{1 \leqslant j \leqslant n_i} A_{i,j}^\bot,\Delta}
+\end{longtabu}
+On peut constater que dans le système comprenant uniquement l'axiome d'identité (en version atomique et bilatérale) ainsi que ces deux règles\footnote{Système que l'on appellera dorénavant $\mathbf{HS}$, pour "calcul HyperSéquentialisé de $\mathbf{MALL}$".}, tout séquent apparaissant dans une preuve contient au plus une formule à gauche et un nombre fini de formules à droite, et toutes les formules sont positives. On peut en fait associer la zone gauche (resp. droite) de ces séquents à la zone à droite (resp. à gauche) du symbole $\Downarrow$ dans les séquents du système $\bm{\Sigma_3}$ de \cite{And92}, la focalisation correspondant alors au passage à gauche des formules via la règle positive {\iruleR{\oplus\otimes_p}}.
 
 \chapter*{La ludique}
 
-En éliminant les règles structurelles d'affaiblissement et de contraction et en se restreignant à un espace de preuves sans coupures, focalisées et à base de connecteurs synthétiques, nous avons réussi à établir un système logique comprenant uniquement un axiome d'identité (qui peut être réduit au cas atomique) et deux règles d'inférence, tout en gardant un compromis intéressant entre pouvoir expressif et tractabilité de la procédure de recherche de preuves. En réalité le qualificatif de règle d'"inférence" n'est plus vraiment adapté à la problématique à laquelle répond le système, qui s'est définitivement éloigné de l'usage déductif qui avait encore sa place dans un système tel que $\mathbf{LKp}$ pour adopter pleinement la lecture \textit{bottom-up} de la recherche ou \emph{tentative} de preuve.\\
+En éliminant les règles structurelles d'affaiblissement et de contraction et en se restreignant à un espace de preuves sans coupures, focalisées et à base de connecteurs synthétiques, nous avons réussi à établir un système logique $\mathbf{HS}$ comprenant uniquement un axiome d'identité et deux règles d'inférence, tout en gardant un compromis intéressant entre pouvoir expressif et tractabilité de la procédure de recherche de preuves. En réalité le qualificatif de règle d'"inférence" n'est plus vraiment adapté à la problématique à laquelle répond le système, qui s'est définitivement éloigné de l'usage déductif qui avait encore sa place dans un système tel que $\mathbf{LKp}$ pour adopter pleinement la lecture \textit{bottom-up} de la recherche ou \emph{tentative} de preuve.\\
 
-On peut en fait voir la ludique comme une lecture littérale de ce paradigme, où l'accent est mis sur le mot "tentative", qui implique la possibilité d'un \emph{échec} traduisant l'invalidité de la preuve en train d'être construite relativement au séquent considéré. On retrouvait déjà cette notion d'échec dans le mécanisme du \textit{backtracking}, qui ne s'active que lorsque un séquent conclusion d'aucune règle valide est atteint. Le problème du \textit{backtracking} est qu'il se situe à un niveau métalogique, celui de la procédure de recherche, et qu'il n'est donc pas représenté au sein même du système. Un des actes fondateurs de la ludique va être d'officialiser la possibilité de l'échec, en remplaçant l'axiome d'identité par un axiome généralisé permettant d'introduire n'importe quel séquent, la règle du \textbf{daimon} :
+On peut en fait voir la ludique comme une lecture littérale de ce paradigme, où l'accent est mis sur le mot "tentative", qui implique la possibilité d'un \emph{échec} traduisant l'invalidité de la preuve en train d'être construite pour le séquent considéré. On retrouvait déjà cette notion d'échec dans le mécanisme du \textit{backtracking}, qui ne s'active que lorsque un séquent conclusion d'aucune règle valide est atteint. Le problème du \textit{backtracking} est qu'il se situe à un niveau métalogique, celui de la procédure de recherche, et qu'il n'est donc pas représenté au sein même du système. Un des actes fondateurs de la ludique va être d'officialiser la possibilité de l'échec, en remplaçant l'axiome d'identité par un axiome généralisé permettant d'introduire n'importe quel séquent, la règle du \textbf{daimon} :
 
 \begin{displaymath}
 	\prftree[r]{\irule{\dai}}
 		{\seq \Lambda}
 \end{displaymath}
 
-Bien sûr cette modification seule ne ferait que rendre le système inconsistant en autorisant la construction de preuves pour $A$ et $\neg A$, ce qui n'est pas l'objectif visé. En fait cette généralisation de l'axiome implique aussi une généralisation de la notion de preuve, qui passe par l'oubli de la notion de \emph{formule} : ainsi $\Lambda$ n'est-il pas une suite finie de formules, mais un ensemble de \textit{loci}, c'est-à-dire l'ensemble des lieux où seraient normalement inscrites les formules. Puisque les preuves du système focalisé de $\mathbf{MALL}$ sont sans coupures, elles satisfont la propriété de la sous-formule, ce qui se traduit au niveau des \textit{loci} par le fait qu'un \textit{locus} doit pouvoir s'exprimer uniquement à partir des \textit{loci} situés plus bas que lui dans la preuve. Mieux, un \textit{locus} doit correspondre à la branche de l'arbre de preuve qui suit la décomposition de la conclusion/racine jusqu'à la sous-formule associée au \textit{locus}. Toutes ces propriétés peuvent être capturées dans les définitions suivantes :
-
+Bien sûr cette modification seule ne ferait que rendre le système inconsistant en autorisant la construction de preuves pour $A$ et $\neg A$, ce qui n'est pas l'objectif visé. En fait cette généralisation de l'axiome implique aussi une généralisation de la notion de preuve, qui passe par l'oubli de la notion de \emph{formule} : ainsi $\Lambda$ n'est-il pas une suite finie de formules, mais un ensemble de \textbf{loci}, c'est-à-dire l'ensemble des lieux où seraient normalement inscrites les formules. Puisque les preuves de $\mathbf{HS}$ sont sans coupures, elles satisfont la propriété de la sous-formule, ce qui se traduit au niveau des \textit{loci} par le fait qu'un \textit{locus} doit pouvoir s'exprimer uniquement à partir des \textit{loci} situés plus bas que lui dans la preuve. Mieux, un \textit{locus} doit correspondre à la branche de l'arbre de preuve qui suit la décomposition de la conclusion/racine jusqu'à la sous-formule associée au \textit{locus}. Toutes ces propriétés peuvent être capturées dans les définitions suivantes :
 \begin{definition}
-	Un \emph{biais} est un nombre entier naturel, dénoté par une lettre latine minuscule ($i,j,k,\ldots$). Une \emph{ramification} est un ensemble fini de biais, dénoté par une lettre latine majuscule ($I,J,K,\ldots$). Un \emph{locus}, aussi appelé \emph{adresse}, est une suite finie de biais, dénotée par une lettre grecque minuscule ($\sigma,\tau,\nu,\xi,\ldots$). La \emph{parité} d'un locus est définie comme la parité de sa longueur.
+	Un \emph{biais} est un nombre entier naturel, dénoté par une lettre latine minuscule ($i,j,k,\ldots$). Une \emph{ramification} est un ensemble fini de biais, dénoté par une lettre latine majuscule ($I,J,K,\ldots$). Un \emph{locus}, aussi appelé \emph{adresse}, est une suite finie $\langle i_1,\ldots,i_n \rangle$ de biais, dénotée par une lettre grecque minuscule ($\sigma,\tau,\nu,\xi,\ldots$).
+\end{definition}
+On dispose aussi d'un opérateur de concaténation $\ast$ pour les \textit{loci}, accompagné de quelques raccourcis de notation :
+\begin{itemize}
+	\item $\sigma \ast i \colonequals \sigma \ast \langle i \rangle$
+	\item $\sigma i \colonequals \sigma \ast i$
+	\item $\sigma \ast I \colonequals \{\sigma \ast i \mid i \in I \}$
+\end{itemize}
+
+La ludique va reprendre les séquents contenant au plus une formule à gauche de $\mathbf{HS}$, maintenant appelés \textbf{fourchettes} :
+\begin{definition}
+	Une \emph{fourchette} est une expression $\Xi \seq \Lambda$, où :
+	\begin{enumerate}
+		\item $\Xi$ et $\Lambda$ sont des ensembles finis de \textit{loci} deux à deux disjoints.
+		\item $\Xi$ contient au plus un \textit{locus}, appelé le \emph{manche}, les \text{loci} de $\Lambda$ étant les \emph{dents}.
+	\end{enumerate}
+\end{definition}
+Les preuves généralisées de la ludique, appelées \textbf{dessins}, sont des arbres de hauteur potentiellement infinie dont les noeuds sont des fourchettes, et que l'on construit à l'aide du \textit{daimon} ainsi que d'une version adaptée et légèrement modifiée des règles de $\mathbf{HS}$ :\\
+
+\begin{longtabu}{p{17em}p{17em}}
+	\rowfont{\centering\bfseries}
+	Règle positive\vspace{3mm} &
+	Règle négative\vspace{3mm} \\
+	\rowfont{\centering}
+	$\prftree[r]{\irule{\xi,I}}
+		{\ldots}
+		{\xi \ast i \seq \Lambda_i}
+		{\ldots}
+		{\seq \xi,\Lambda}$ &
+	$\prftree[r]{\irule{\xi,\mathcal{N}}}
+		{\ldots}
+		{\seq \xi \ast I,\Lambda_I}
+		{\ldots}
+		{\xi \seq \Lambda}$ \\
+	\rowfont{\footnotesize}
+	$I$ est une ramification telle que la règle comporte une prémisse pour chaque $i \in I$, et les $\Lambda_i$ sont deux à deux disjoints et inclus dans $\Lambda$. &
+	$\mathcal{N}$ est un ensemble possiblement infini de ramifications, le \emph{répertoire} de la règle, tel que celle-ci comporte une prémisse pour chaque $I \in \mathcal{N}$, et les $\Lambda_I$ sont inclus dans $\Lambda$.
+\end{longtabu}
+
+On a donc repris les règles positives et négative de $\mathbf{HS}$ mais dans une forme plus épurée, où l'on oublie toute l'information relative aux formules pour ne retenir que la relation d'ordre qu'elles entretiennent, traduite ici dans la notion de \emph{sublocus} :
+\begin{definition}
+	On dit que $\tau$ est un \emph{sublocus} de $\sigma$ lorsqu'il existe un $\nu$ tel que $\tau = \sigma \ast \nu$.
 \end{definition}
 
-% TODO: présenter les règles positive et négative en analogie avec les règles du système focalisé de MALL, et les expliquer en termes de processus d'argumentation entre un proposant et un opposant, le daimon représentant l'abandon d'un joueur.
+Les dessins et les preuves de $\mathbf{HS}$ se distinguent ainsi crucialement sur deux aspects :
+\begin{enumerate}
+	\item Les dessins peuvent s'étendent de manière infinie, non seulement en hauteur du fait qu'il n'est nullement obligé de donner des feuilles aux branches sous la forme d'instances du \textit{daimon}, mais aussi en largeur via le nombre potentiellement infini de prémisses de la règles négative. Ceci n'est pas le cas pour les preuves traditionnels du calcul des séquents (et en particulier celle de $\mathbf{HS}$), dont les branches se terminent obligatoirement par des instances d'axiomes, et dont les règles ne contiennent dans la plupart des cas qu'un nombre fini de prémisses.
+	\item La gestion du contexte est moins restrictive dans les dessins : dans la règle positive les $\Lambda_i$ n'ont plus besoin de former une partition totale de $\Lambda$, et dans la règle négative les $\Lambda_I$ ne sont pas nécessairement des recopies complètes de $\Lambda$. Cela revient en fait à admettre une forme d'affaiblissement, autorisant des instances de règles où une partie du contexte disparaît telles que :\\
+	\begin{longtabu}{>{$}c<{$}>{$}c<{$}}
+		\prftree[r]{\irule{\xi,\{1,2\}}}
+		{\xi \ast 1 \seq \alpha}
+		{\xi \ast 2 \seq \beta}
+		{\seq \xi,\alpha,\beta,\gamma} &
+		\prftree[r]{\irule{\xi,\{\{1,2\},\{1,3\}\}}}
+		{\seq \xi \ast \{1,2\},\alpha,\beta}
+		{\seq \xi \ast \{1,3\},\alpha}
+		{\xi \seq \alpha,\beta,\gamma}
+	\end{longtabu}
+\end{enumerate}
 
-% TODO: enchaîner naturellement sur la notion de dessin, interprétable comme une stratégie argumentative, et illustrer avec un exemple modélisant une situation IRL.
+La ludique oublie donc complètement la problématique de l'efficacité lors de la recherche de preuve, d'une part en autorisant des dessins aux dimensions infinies, ce qui correspondrait à une recherche qui ne termine jamais; et d'autre part en admettant une forme d'affaiblissement, rendant toutes les règles irréversibles. En réalité, les notions mêmes de recherche de preuve et de réversibilité n'ont plus de sens dans le cadre ludique, un dessin pris dans son individualité ne pouvant être considéré comme une \emph{preuve} : il faut plutôt le voir comme une \emph{stratégie de dialogue} qui attend d'être testée par d'autres stratégies, test qui a lieu lorsque deux agents exécutent leurs stratégies respectives lors d'une \emph{interaction dialogique}. Si l'interaction se déroule correctement, c'est-à-dire si les deux agents atteignent un consensus (représenté par la règle du \textit{daimon}), alors on dit que l'interaction \emph{converge}. Sinon se créé un dissensus entre les deux agents, et on dit que l'interaction \emph{diverge}. Ce processus d'interaction entre dessins correspond au processus d'élimination des coupures entre preuves en calcul des séquents, et peut être formalisé via la notion de \emph{normalisation d'un réseau de coupure}. Toutefois la présentation de cette notion complexe dépasse notre cadre d'introduction à la ludique et à ses objets de base que sont les dessins.\\
 
-% TODO: rajouter un deuxième dessin pour l'opposant permettant d'introduire l'idée de normalisation.
+Pour finir, il peut être intéressant de donner un exemple de modélisation en ludique d'une situation concrète de dialogue, afin d'illustrer l'interprétation pragmatique des dessins donnée ci-dessus.
 
-% TODO: reconstruction interactive des types/formules via la notion de comportement ?
+% TODO: exemple de modélisation d'une interaction dialogique
 
-\chapter*{Applications à la pragmatique}
+\chapter*{Conclusion}
+
+% TODO: présentation formelle de la notion de coupure comme co-présence en un même lieu, puis du processus de normalisation/élimination des coupures
+
+% TODO: notion de dessein comme véritables objets de la ludique
+
+% TODO: reconstruction interactive des types/formules via la notion de comportement
+
+En se concentrant sur la conception d'un système le plus expressif possible admettant un maximum de dessins, tout en restant suffisemment consistant d'un point de vue calculatoire pour pouvoir reconstruire les règles logiques. On peut ici faire un parallèle avec le $\lambda$-calcul dans ses versions pur et typée, où le $\lambda$-calcul pur serait associé à la ludique dans son oubli de l'information de typage, et le $\lambda$-calcul typé au système $\mathbf{HS}$\footnote{On peut rendre ce parallèle entre types et formules plus précis via la correspondance de Curry-Howard.}. Toutefois en $\lambda$-calcul le typage se fait de manière "\textit{ad hoc}" en attribuant à chaque variable un type atomique, tandis que l'ambition de la ludique est d'expliquer la notion de formule/type comme un produit de la dynamique calculatoire, comprise comme l'interaction entre les dessins/$\lambda$-termes.
 
 \nocite{Tai68}
 \nocite{Lec11}
