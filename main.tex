@@ -1,4 +1,4 @@
-\documentclass[12pt]{report}
+\documentclass[11pt]{report}
 
 \usepackage{polyglossia}
 \setdefaultlanguage{french}
@@ -21,6 +21,7 @@
 \usepackage{pifont}
 \usepackage{cmll}
 \usepackage{bbding}
+\usepackage{titlesec}
 
 \doublespacing
 
@@ -43,23 +44,58 @@
 
 \newtheorem{definition}{Définition}
 
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries}{}{0pt}{\huge}
+
 \begin{document}
 
+\pagenumbering{gobble}
+\begin{center}
+    \newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+    \includegraphics[scale=0.25]{img/logo-paris1.jpg}
+    \vspace{1.5cm}
+
+    \textsc{\LARGE Mémoire}\\[0.5cm]
+    {Master 1 de Philosophie}\\
+    {Parcours Logique et Philosophie des Sciences -- Option Logique}\\[0.5cm]
+    {Directeur de mémoire : Alberto NAIBO}\\[1cm]
+
+    \HRule \\[1.0cm]
+    {\huge\bf Recherche de preuves, Ludique et Pragmatique}\\[0.5cm]
+    \HRule \\[1.8cm]
+
+    {\Large Pablo DONATO}\\[2.5cm]
+
+    {\large \today}
+\end{center}
+
+\clearpage
+\pagenumbering{arabic}
+\thispagestyle{empty}
+\null
+\newpage
+
+\tableofcontents
+
 \chapter*{Introduction}
+\addcontentsline{toc}{chapter}{Introduction}
 
 La \textbf{ludique} est une théorie inventée par le mathématicien Jean-Yves Girard qui se propose de refonder la logique autour de la notion d'\emph{interaction}. Elle s'inscrit directement dans la tradition de la théorie de la démonstration, et ce de deux façons : d'abord par son origine historique et technique, qui est la découverte de la \emph{focalisation} par Andreoli \cite{And92} dans le cadre de ses recherches sur la programmation logique linéaire; puis par la place centrale accordée aux \emph{desseins}, les objets primitifs de la ludique, qui correspondent à une sorte de généralisation/abstraction des preuves formelles. La ludique a été introduite extensivement par Girard dans son article \textit{Locus Solum} \cite{Gir01}. Cet article apparaît comme l'un des premiers où l'auteur n'hésite pas à complémenter les résultats mathématiques par des réflexions philosophiques plus personnelles : on est particulièrement marqué par le positionnement très tranché sur les théories logiques concurrentes, ainsi que par le style de rédaction assez excentrique pour un article académique.\\
 
-Outre ces quelques originalités --- que l'on retrouve jusque dans les choix terminologiques ---, la ludique a su démontrer son intérêt scientifique, à la fois du point de vue de la logique pure, et des applications à d'autres domaines tels que l'informatique et la linguistique. Dans le premier cas, on peut attribuer ce succès à deux résultats de complétude qui constituent une véritable justification technique de la pertinence de la ludique en tant que système logique\footnote{Il convient toutefois de mentionner que certains fragments de la logique usuelle n'ont pas encore trouvé de reconstruction ludique, ce qui relativise l'intérêt fondationnel de la théorie. C'est une des raisons qui ont poussé Girard à développer un cadre plus proche des mathématiques standards : la \textit{Géométrie de l'Interaction}.}. Dans le cas des applications extra-logiques, on constate une forte interaction avec l'informatique que l'on doit principalement à l'héritage de la logique linéaire : on a non seulement des travaux tels que \cite{Sau08} qui étendent le travail original d'Andreoli en programmation logique au cadre ludique, mais aussi des tentatives plus originales avec \cite{Ter11} qui se sert de la ludique pour reformuler dans un cadre unifié des résultats de théorie de la calculabilité/complexité, ou encore \cite{Fou11} qui propose de modéliser les interactions entre les différents agents du Web à l'aide de la ludique. Pour ce qui est de la linguistique, les applications actuelles sont plus particulièrement ciblés vers la \emph{pragmatique}. Les desseins mentionnés précédemment peuvent en effet être interprétés comme des stratégies argumentatives dans le cadre d'une interaction \emph{dialogique}, fournissant une approche formelle et computationnelle à l'étude du langage en tant que pratique intersubjective ancrée dans l'espace et le temps.\\
+Outre ces quelques originalités --- que l'on retrouve jusque dans les choix terminologiques ---, la ludique a su démontrer son intérêt scientifique, à la fois du point de vue de la logique pure, et des applications à d'autres domaines tels que l'informatique et la linguistique. Dans le premier cas, on peut attribuer ce succès à deux résultats de complétude qui constituent une véritable justification technique de la pertinence de la ludique en tant que système logique\footnote{Il convient toutefois de mentionner que certains fragments de la logique usuelle n'ont pas encore trouvé de reconstruction ludique, ce qui relativise l'intérêt fondationnel de la théorie. C'est une des raisons qui ont poussé Girard à développer un cadre plus proche des mathématiques standards : la \textit{Géométrie de l'Interaction}.}. Dans le cas des applications extra-logiques, on constate une forte interaction avec l'informatique que l'on doit principalement à l'héritage de la logique linéaire : il existe non seulement des travaux tels que \cite{Sau08} qui étendent le travail original d'Andreoli en programmation logique au cadre ludique, mais aussi des tentatives plus originales avec \cite{Ter11} qui se sert de la ludique pour reformuler dans un cadre unifié des résultats de théorie de la calculabilité/complexité, ou encore \cite{Fou11} qui propose de modéliser les interactions entre les différents agents du Web à l'aide de la ludique. Pour ce qui est de la linguistique, les applications actuelles sont plus particulièrement ciblés vers la \emph{pragmatique}. Les desseins mentionnés précédemment peuvent en effet être interprétés comme des stratégies argumentatives dans le cadre d'une interaction \emph{dialogique}, fournissant une approche formelle et computationnelle à l'étude du langage en tant que pratique intersubjective ancrée dans l'espace et le temps.\\
 
 L'objectif premier de ce mémoire est de donner une présentation intégrée des motivations historiques et conceptuelles qui ont donné naissance à la ludique, en prenant pour fil rouge la problématique de la recherche automatique de preuves en calcul des séquents. On sera alors naturellement amené à envisager un système logique doué de la propriété de focalisation, qui lorsqu'elle est prise comme primitive donne lieu à la ludique. On introduira ensuite les concepts de base de la théorie abordés du point de vue des applications à la pragmatique, où l'on s'intéressera à la modélisation formelle des dialogues et de leur dynamique.
 
-\chapter*{Origines}
+\chapter{Origines}
 
 Il existe aujourd'hui en théorie de la démonstration une très grande variété de systèmes de calcul des séquents. Les premiers systèmes $\mathbf{LK}$ et $\mathbf{LJ}$, conçus respectivement pour les logiques classique et intuitionniste, furent introduits par Gentzen comme outils techniques pour prouver la cohérence de l'arithmétique de manière finitiste, conformément au programme de Hilbert. Mais l'échec de ce dernier, prononcé notamment par le second théorème d'incomplétude de Gödel, incita les logiciens qui reprirent les travaux de Gentzen à étudier ces systèmes de logique pure pour eux-mêmes. Plus précisément, on commença à s'intéresser aux propriétés \emph{structurelles} des démonstrations exprimées dans ce format, amenant inévitablement à la création de variantes en tous genres possédant ou non certaines propriétés.\\
 
 Avec l'arrivée de l'informatique, on s'intéressa de plus en plus aux propriétés \emph{computationnelles} des systèmes de calcul des séquents. En particulier, dans le paradigme du \emph{calcul comme recherche de preuves} employé en programmation logique, on cherche à optimiser le processus de recherche d'une preuve pour un séquent dans une logique donnée, afin de réduire la complexité des programmes à l'exécution. Les propriétés structurelles des démonstrations occupent dans ce cadre une place centrale, les conséquences du choix de telle ou telle règle lors de la conception d'un système allant bien au-delà de la simple préférence esthétique. L'une de ces propriétés, la \textbf{réversibilité}, se trouve être au c\oe{}ur de l'innovation technique qui a donné naissance à la ludique : la \textbf{focalisation}.
 
-\chapter*{Le calcul des séquents}
+\chapter{Le calcul des séquents}
 
 Historiquement, le premier formalisme adopté en théorie de la démonstration afin de représenter les preuves est celui des \emph{systèmes à la Hilbert}. De nature axiomatique, ces derniers ne comprennent que très peu de règles d'inférence --- souvent uniquement le \textit{modus ponens} ---, et se prêtent donc mal à un usage pratique visant à raisonner à l'intérieur du système. De plus, cette simplicité structurelle des démonstrations formelles en fait des objets assez pauvres d'un point de vue mathématique, et donc peu aptes à concurrencer les approches sémantiques alors particulièrement prisées à l'époque. C'est très probablement ce qui a poussé Gentzen à mettre au point deux systèmes de déduction alternatifs : la \emph{déduction naturelle} dans un premier temps, puis le \emph{calcul des séquents}.\\
 
@@ -154,7 +190,7 @@ Dans le groupe logique, on dispose de règles pour introduire chaque connecteur 
         {\Gamma \seq A \lor B,\Delta}
 \end{longtabu}
 
-\chapter*{Stratégies de recherche}
+\chapter{Stratégies de recherche}
 
 Lorsque l'on procède à la recherche d'une preuve pour un séquent donné, plusieurs stratégies sont envisageables : les premières, que l'on pourrait qualifier de \emph{top-down}\footnote{En référence au sens dans lequel s'effectue traditionnellement les dérivations.}, consistent à partir d'instances d'axiomes qui nous semblent pertinentes, puis à utiliser les règles du système adopté pour produire un certain nombre de dérivations que l'on va pouvoir composer entre elles, et ce jusqu'à arriver à la conclusion recherchée. C'est ce genre de méthode heuristique qui est utilisé en pratique en mathématiques\footnote{En remplaçant le plus souvent les axiomes par des lemmes ou des hypothèses.}, ou encore dans les systèmes à la Hilbert. Or contrairement à ces derniers, les systèmes de calcul des séquents possèdent très peu d'axiomes, et se prêtent donc assez mal à ce type de stratégie. En revanche on vient de voir qu'ils comportent beaucoup de règles de dérivation, parfois plusieurs pour un même connecteur. Cette propriété les rend particulièrement adaptés aux stratégies de recherche dites \textbf{root-first} (ou, par opposition aux premières, \emph{bottom-up}), que l'on peut résumer très succintement par l'algorithme suivant :\\
 
@@ -172,7 +208,9 @@ On voit donc que ces stratégies se décrivent bien de manière algorithmique, c
 
 Prenons pour exemple le séquent $p \seq p \lor q$. La seule preuve de ce séquent consiste en une simple application de la règle {\iruleR{l\lor}}, qui amène à l'instance d'axiome $p \seq p$. En suivant une implémentation naïve de notre algorithme qui incluerait dans $L$ l'ensemble des instances de règles valides, on pourrait très bien opter pour une instance de la règle {\iruleR{r\lor}}, qui nous amènerait au séquent $p \seq q$ pour lequel il n'existe aucune instance de règle valide. Dans ce cas très simple, une solution un peu "brutale" consisterait à effectuer du \emph{backtracking}, c'est-à-dire revenir en arrière et essayer une autre instance de règle valide sur $p \seq p \lor q$. Néanmoins dans des cas plus complexes, le \emph{backtracking} se révèle vite impraticable du fait qu'il est très difficile de déterminer à quel séquent antérieur recommencer la recherche afin d'obtenir une preuve du séquent final; sans compter les problèmes de complexité combinatoire quand $L$ contient beaucoup d'éléments.
 
-\chapter*{Réversibilité classique}
+\chapter{Réversibilité classique}
+
+\section{Propriétés des règles}
 
 On voit donc que pour concevoir une procédure de recherche effective, il va être nécessaire d'obtenir plus d'informations sur la \emph{structure} des preuves dans le système considéré, afin de quotienter au maximum l'espace des preuves sans perte de pouvoir déductif. On a déjà mentionné que grâce au \emph{Haupstatz}, on peut quotienter l'ensemble des preuves de $\mathbf{LK}$ (et donc de $\mathbf{LKp}$) par l'ensemble des preuves sans coupures. Cela signifie concrètement que lors de notre procédure de recherche, il ne sera pas nécessaire d'inclure dans $L$ les instances de la règle $cut$, ce qui réduit considérablement l'espace de recherche puisque toutes les autres règles de $\mathbf{LKp}$ vérifient la \emph{propriété de la sous-formule} :
 
@@ -186,7 +224,10 @@ Néanmoins la propriété de la sous-formule ne suffit pas à éliminer le probl
     On dit qu'une règle $\mathsf{R}$ est \emph{réversible} dans un système $\mathbf{D}$ lorsque pour toute instance $\mathsf{r}$ de $\mathsf{R}$, si la conclusion de $\mathsf{r}$ est prouvable dans $\mathbf{D}$, alors chacune des prémisses de $\mathsf{r}$ l'est aussi.
 \end{definition}
 
-Ainsi, étant donné un séquent de la forme $\Gamma \seq A \lor B,\Delta$ prouvable dans $\mathbf{LKp}$, il n'est pas possible de déterminer si la prémisse qui nous a permis de le conclure est $\Gamma \seq A,\Delta$ ou $\Gamma \seq B,\Delta$, et il se peut que seulement l'une des deux soit prouvable dans $\mathbf{LKp}$ : on dit qu'il y a \emph{perte d'information} lors de l'application de la règle {\iruleR{l\lor}} ou {\iruleR{r\lor}}.\\
+Ainsi, étant donné un séquent de la forme $\Gamma \seq A \lor B,\Delta$ prouvable dans $\mathbf{LKp}$, il n'est pas possible de déterminer si la prémisse qui nous a permis de le conclure est $\Gamma \seq A,\Delta$ ou $\Gamma \seq B,\Delta$, et il se peut que seulement l'une des deux soit prouvable dans $\mathbf{LKp}$ : on dit qu'il y a \emph{perte d'information} lors de l'application de la règle {\iruleR{l\lor}} ou {\iruleR{r\lor}}.
+
+
+\section{Des règles irréversibles aux règles réversibles}
 
 La question est donc de savoir s'il est possible de remplacer les règles irréversibles de $\mathbf{LKp}$ par des règles réversibles afin d'éliminer le besoin d'effectuer du \emph{backtracking}, ce qui nous rapprocherait de la procédure de recherche effective voulue. On peut déjà constater que de manière parfaitement symétrique, les deux règles gauches de la conjonction sont elles aussi irréversibles. Or si l'on se souvient de l'interprétation intuitive d'un séquent en termes de conjonction à gauche et de disjonction à droite, on peut être tenté de remplacer ces deux connecteurs par une simple "," de séparation des formules du séquent. De cette manière on tombe sur les deux règles d'affaiblissement, elles aussi irréversibles, ce qui suggère deux choses :
 
@@ -267,6 +308,8 @@ Encore une fois on peut facilement montrer que les versions irréversibles des r
         {\Gamma,A \land B \seq \Delta}
 \end{displaymath}
 
+\section{Des règles réversibles aux règles irréversibles}
+
 On a donc montré que toutes les règles logiques irréversibles de $\mathbf{LKp}$ peuvent être remplacées par des versions réversibles sans perte de pouvoir déductif, puisqu'elles peuvent être dérivées de ces dernières. Réciproquement, on peut montrer que les versions réversibles sont dérivables des règles irréversibles d'origine, ce qui signifie qu'il n'y a pas non plus d'augmentation du pouvoir déductif, donc que l'on reste dans un système \textbf{équivalent} à $\mathbf{LKp}$. Pour cela, on commence par remarquer que toute règle à contextes partagés est dérivable de son équivalent à contextes indépendants, cette fois-ci en appliquant non-plus les règles d'affaiblissement, mais celles de \textbf{contraction} (dénotées comme précédemment par la double ligne d'inférence) :
 
 \begin{displaymath}
@@ -291,7 +334,7 @@ Cela permet de montrer la dérivabilité de la règle gauche de l'implication r�
         {\Gamma \seq A \lor B,\Delta}
 \end{displaymath}
 
-\chapter*{Élimination des règles structurelles}
+\chapter{Élimination des règles structurelles}
 
 Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mathbf{LKp}$ aux seules règles d'affaiblissement, en se plaçant dans un système équivalent où toutes les règles logiques sont réversibles. Néanmoins pour cela il a fallu montrer l'interdérivabilité des versions réversibles et irréversibles des règles logiques, qui n'est possible qu'à l'aide des règles structurelles d'affaiblissement et de contraction. Or pour atteindre une procédure de recherche véritablement effective, il semble nécessaire de se débarrasser d'une part de l'affaiblissement qui est source d'irréversibilité, mais aussi de la contraction, qui en l'absence d'affaiblissement devient elle aussi source d'irréversibilité. Il suffit pour s'en convaincre de considérer l'instance de {\iruleR{C}} ayant pour conclusion $p \seq p$, dont la prémisse $p \seq p,p$ n'est prouvable qu'à l'aide d'une instance de {\iruleR{W}}. Se présentent alors deux possibilités :
 \begin{enumerate}
@@ -301,7 +344,9 @@ Nous avons donc réussi à restreindre la source de l'irréversibilité de $\mat
 
 Bien qu'on pourrait tout à fait se satisfaire de la première approche pour mettre en oeuvre une recherche de preuves effective en logique classique, c'est la deuxième approche qui se révèle la plus intéressante d'un point de vue théorique, et pour les fins visées dans ce mémoire. C'est en effet dans l'analyse de la dynamique qui prend place lorsque l'on optimise la recherche de preuves en logique linéaire que se dévoile le mécanisme de la \textbf{focalisation}, qui est au cœur de la ludique.
 
-\chapter*{Des règles aux connecteurs réversibles}
+\chapter{Des règles aux connecteurs réversibles}
+
+\section{Symétrie des règles}
 
 Dans $\mathbf{LKp}$, la symétrie des règles de $\neg$, $\land$ et $\lor$, ainsi que la définissabilité de l'implication classique par $A \lto B \colonequals \neg A \lor B$, permettent de formuler un calcul équivalent dit \emph{monolatéral}. Le principe est de transformer les séquents bilatéraux de la forme $\Gamma \seq \Delta$ en séquents monolatéraux $\seq \neg \Gamma,\Delta$ (où $\neg \Gamma$ dénote la liste des négations des formules de $\Gamma$), afin de ne conserver que les règles droites. Les règles de la négation ayant pour fonction l'échange gauche/droite des formules à l'intérieur des séquents bilatéraux, on les supprime entièrement du calcul, ce qui nécessite de sortir la négation du langage : elle perd ainsi son statut de connecteur unaire et devient une fonction involutive sur l'ensemble des formules, définie inductivement de la manière suivante :
 
@@ -334,10 +379,11 @@ On gagne ainsi grandement en simplicité dans la recherche de preuves, puisque l
         {\neg (A \land B) \seq \neg A \lor \neg B}
 \end{displaymath}
 
-On voit que la règle à contextes partagés {\iruleR{\land}} nous oblige à distribuer le contexte $\neg A,\neg B$ dans les deux prémisses, ce qui fait qu'en l'absence d'affaiblissement il est impossible d'arriver à des instances d'axiome.\\
+On voit que la règle à contextes partagés {\iruleR{\land}} nous oblige à distribuer le contexte $\neg A,\neg B$ dans les deux prémisses, ce qui fait qu'en l'absence d'affaiblissement il est impossible d'arriver à des instances d'axiome.
 
-Pour retrouver la symétrie du calcul en l'absence des règles structurelles, il est nécessaire de décomposer la conjonction et la disjonction en deux variantes dites \emph{multiplicatives} et \emph{additives} (cf. Tab. \ref{tab:conn_mall}), qui correspondent respectivement aux règles à contextes indépendants et partagés.
+\section{Le système $\mathbf{MALL}$}
 
+Pour retrouver la symétrie du calcul en l'absence des règles structurelles, il est nécessaire de décomposer la conjonction et la disjonction en deux variantes dites \emph{multiplicatives} et \emph{additives} (cf. Tab. \ref{tab:conn_mall}), qui correspondent respectivement aux règles à contextes indépendants et partagés. 
 \begin{table}[h]
 \begin{longtabu}{|>{\bf}c|c|c|}
     \hline
@@ -351,8 +397,7 @@ Pour retrouver la symétrie du calcul en l'absence des règles structurelles, il
 \caption{Connecteurs de $\mathbf{MALL}$}
 \label{tab:conn_mall}
 \end{table}
-
-On peut maintenant reformuler les règles logiques de notre système sous-structurel réversible dans ce nouveau langage, en faisant comme mentionné tout à l'heure exception de l'implication\footnote{Ce choix est justifié d'une part par la difficulté à définir de façon symétrique et au sein d'un même système une variante multiplicative et additive de l'implication (voir \cite{OP99} pour un traitement de la question à l'aide de la logique sous-structurelle $\mathbf{BI}$); et d'autre part car cela n'est pas utile au développement du mécanisme de focalisation.}\footnote{On reprend ici la notation de la négation à l'aide du symbole $\bot$ en exposant des formules introduite par Girard, car elle permet de faire le lien entre la négation de la logique linéaire et la notion d'\emph{orthogonalité} centrale en ludique.} :
+On peut alors reformuler les règles logiques de notre système sous-structurel réversible dans ce nouveau langage, en faisant comme mentionné tout à l'heure exception de l'implication\footnote{Ce choix est justifié d'une part par la difficulté à définir de façon symétrique et au sein d'un même système une variante multiplicative et additive de l'implication (voir \cite{OP99} pour un traitement de la question à l'aide de la logique sous-structurelle $\mathbf{BI}$); et d'autre part car cela n'est pas utile au développement du mécanisme de focalisation.} :\\
 
 \begin{longtabu}{>{$}c<{$}>{$}c<{$}}
     \prftree[r]{\iruleL{\cdot^\bot}}
@@ -378,6 +423,8 @@ On peut maintenant reformuler les règles logiques de notre système sous-struct
         {\Gamma \seq A,B,\Delta}
         {\Gamma \seq A \parr B,\Delta}
 \end{longtabu}
+
+On notera qu'on a repris la notation de la négation à l'aide du symbole $\bot$ en exposant des formules introduite par Girard, car elle permet de faire le lien entre la négation de la logique linéaire et la notion d'\emph{orthogonalité} centrale en ludique.\\
 
 Afin de pouvoir formuler un calcul monolatéral équivalent, il nous reste encore à montrer que les équivalences de De Morgan multiplicatives (\ref{eq:mul_DM}) et additives (\ref{eq:add_DM}) sont prouvables dans le système. Or il se trouve qu'elles ne le sont pas, ce qui est dû au fait que nous nous sommes limités, dans notre quête d'un algorithme de recherche de preuves effectif, aux règles réversibles. Par exemple si l'on veut prouver $(A \otimes B)^\bot \seq A^\bot \parr B^\bot$, on est obligé de décomposer $A \otimes B$ à droite du séquent, ce qui n'est pas possible sans la règle {\iruleR{\otimes}}.
 \begin{align}
@@ -421,7 +468,9 @@ Dans l'objectif de retrouver les équivalences de De Morgan (ainsi qu'un peu de 
 	On dit qu'une formule $A$ est \emph{négative} lorsque $A$ est un atome propositionnel négatif, ou lorsque le connecteur principal de $A$ est réversible.
 \end{definition}
 
-\chapter*{La focalisation}
+\chapter{La focalisation}
+
+\section{Preuves focalisées}
 
 En réintroduisant des règles irréversibles pour retrouver la symétrie de la logique classique sans les règles structurelles, on a aussi réintroduit la nécessité d'effectuer du \textit{backtracking} lors de la recherche de preuves. Il semble donc que ce que nous avons gagné en nombre de règles et en pouvoir déductif soit perdu en complexité de la procédure de recherche. Or il se trouve que grâce à la polarisation des formules, il est possible de restreindre l'espace de recherche à des preuves dites \emph{focalisées}. L'idée est d'organiser la recherche en une alternance de deux phases :
 \begin{itemize}
@@ -454,14 +503,16 @@ Cette preuve n'est pas focalisée, car une fois la formule $A \otimes (B \otimes
 \end{displaymath}
 Cette preuve est focalisée à condition que les formules $F$ et $G$ ne soit pas négatives et non-atomiques, auquel cas selon la condition de priorité de la phase asynchrone elles auraient dûes être décomposées en premier.\\
 
-Dans son article \cite{And92}, Andreoli montre que l'ensemble des preuves focalisées formalisées dans son système $\bm{\Sigma_3}$ est un sous-ensemble complet des preuves de $\mathbf{LL}$, c'est-à-dire qu'il existe une preuve focalisée pour chaque formule dérivable dans $\mathbf{LL}$. Le théorème s'applique facilement à $\mathbf{MALL}$ qui est un sous-système de $\mathbf{LL}$, ce qui signifie que l'on peut effectivement quotienter l'espace de recherche par ces preuves focalisées. Il est intéressant de remarquer qu'Andreoli arrive à ce résultat de manière parfaitement constructive, de sorte qu'il est en principe possible d'extraire de la démonstration qu'il donne une procédure mécanique permettant de transformer n'importe quelle preuve de $\mathbf{LL}$ en une preuve de $\bm{\Sigma_3}$. On peut ici faire le parallèle avec le \textit{Haupstatz}\footnote{Qui par ailleurs reste valide dans $\mathbf{MALL}$.} évoqué plus tôt, qui de manière similaire permet de restreindre l'espace des preuves via la procédure d'\emph{élimination des coupures}. On comprend alors mieux l'intérêt porté par Girard sur ce mécanisme de focalisation, compte-tenu de la place centrale qu'il accordait déjà au $Haupstatz$ dans ses travaux en théorie de la démonstration, au point de rejeter tout système de calcul des séquents ne vérifiant pas ce théorème.\\
+Dans son article \cite{And92}, Andreoli montre que l'ensemble des preuves focalisées formalisées dans son système $\bm{\Sigma_3}$ est un sous-ensemble complet des preuves de $\mathbf{LL}$, c'est-à-dire qu'il existe une preuve focalisée pour chaque formule dérivable dans $\mathbf{LL}$. Le théorème s'applique facilement à $\mathbf{MALL}$ qui est un sous-système de $\mathbf{LL}$, ce qui signifie que l'on peut effectivement quotienter l'espace de recherche par ces preuves focalisées. Il est intéressant de remarquer qu'Andreoli arrive à ce résultat de manière parfaitement constructive, de sorte qu'il est en principe possible d'extraire de la démonstration qu'il donne une procédure mécanique permettant de transformer n'importe quelle preuve de $\mathbf{LL}$ en une preuve de $\bm{\Sigma_3}$. On peut ici faire le parallèle avec le \textit{Haupstatz}\footnote{Qui par ailleurs reste valide dans $\mathbf{MALL}$.} évoqué plus tôt, qui de manière similaire permet de restreindre l'espace des preuves via la procédure d'\emph{élimination des coupures}. On comprend alors mieux l'intérêt porté par Girard sur ce mécanisme de focalisation, compte-tenu de la place centrale qu'il accordait déjà au $Haupstatz$ dans ses travaux en théorie de la démonstration, au point de rejeter tout système de calcul des séquents ne vérifiant pas ce théorème.
+
+\section{Connecteurs synthétiques}
 
 On a donc vu que les preuves focalisées consistent en une succession de "blocs" d'applications de règles réversibles lors de la phase asynchrone, et irréversibles lors de la phase synchrone. On reconnaît ici la forme d'un dialogue entre deux processus qui interagiraient chacun leur tour dans une sorte de jeu démonstratif, rejoignant les interprétations ludiques de la logique tels que la logique dialogique de Lorenzen ou la sémantique des jeux GTS de Hintikka. Toutefois pour rendre cette correspondance plus claire et plus précise, il serait commode de pouvoir réduire ces blocs de règles multiples en instances d'une unique règle associée à chaque phase/processus/joueur. Or pour réduire notre système à deux règles, une positive pour $\otimes,\oplus$ et une négative pour $\with,\parr$, il est d'abord nécessaire de trouver deux formes "normales" des formules de $\mathbf{MALL}$ auxquelles toute formule de l'une ou l'autre polarité peut-être ramenée. Pour cela on peut faire appel à la distributivité des connecteurs multiplicatifs sur les additifs :
 \begin{align}
 A \otimes (B \oplus C) \equiv (A \otimes B) \oplus (A \otimes C) \label{eq:dist_pos} \\
 A \parr (B \with C) \equiv (A \parr B) \with (A \parr C) \label{eq:dist_neg}
 \end{align}
-Ainsi toute formule positive (resp. négative) peut être exprimée de manière équivalente dans $\mathbf{MALL}$ comme une formule de la forme $\bigoplus_{i \in I}\bigotimes_{j \in J_i}A_{i,j}$ (resp. $\bigwith_{i \in I}\bigparr_{j \in J_i}A_{i,j}$)\footnote{Notons qu'il est nécessaire pour que cette réduction soit valide de vérifier la commutativité des connecteurs, ainsi que leur associativité qui permet d'utiliser la formulation $n$-aire.}. On parle aussi parfois de \emph{connecteur synthétique} positif (resp. négatif) entre les formules $A_{i,j}$.\\
+Ainsi toute formule positive (resp. négative) peut être exprimée de manière équivalente dans $\mathbf{MALL}$ comme une formule de la forme $\bigoplus_{i \in I}\bigotimes_{j \in J_i}A_{i,j}$ (resp. $\bigwith_{i \in I}\bigparr_{j \in J_i}A_{i,j}$)\footnote{Notons qu'il est nécessaire pour que cette réduction soit valide de vérifier la commutativité des connecteurs, ainsi que leur associativité qui permet d'utiliser la formulation $n$-aire.}. On parle aussi de \emph{connecteur synthétique} positif (resp. négatif) entre les formules $A_{i,j}$.\\
 
 Essayons maintenant de généraliser les blocs de règles évoqués précédemment à l'aide des connecteurs synthétiques. Tout d'abord pour la phase asynchrone, on peut partir du principe que toutes les formules négatives du séquent à prouver ont été regroupées à l'aide d'un $\parr$ $n$-aire. On se retrouve donc avec un séquent ne contenant qu'une seule formule négative en forme normale, ainsi qu'un contexte $\Delta$ de formules positives. La phase asynchrone étant déterministe, la décomposition du séquent prendra systématiquement la forme suivante\footnote{On se permet ici une formulation $n$-aire des règles de $\mathbf{MALL}$, qui se déduit assez directement de leur formulation binaire.} :
 \begin{displaymath}
@@ -539,7 +590,9 @@ Cela nous permet de donner une formulation bilatérale des règles positives et 
 \end{longtabu}
 On peut constater que dans le système comprenant uniquement l'axiome d'identité (en version atomique et bilatérale) ainsi que ces deux règles\footnote{Système que l'on appellera dorénavant $\mathbf{HS}$, pour "calcul HyperSéquentialisé de $\mathbf{MALL}$".}, tout séquent apparaissant dans une preuve contient au plus une formule à gauche et un nombre fini de formules à droite, et toutes les formules sont positives. On peut en fait associer la zone gauche (resp. droite) de ces séquents à la zone à droite (resp. à gauche) du symbole $\Downarrow$ dans les séquents du système $\bm{\Sigma_3}$ de \cite{And92}, la focalisation correspondant alors au passage à gauche des formules via la règle positive {\iruleR{\oplus\otimes_p}}.
 
-\chapter*{La ludique}
+\chapter{La ludique}
+
+\section{Introduction}
 
 En éliminant les règles structurelles d'affaiblissement et de contraction et en se restreignant à un espace de preuves sans coupures, focalisées et à base de connecteurs synthétiques, nous avons réussi à établir un système logique $\mathbf{HS}$ comprenant uniquement un axiome d'identité et deux règles d'inférence, tout en gardant un compromis intéressant entre pouvoir expressif et tractabilité de la procédure de recherche de preuves. En réalité le qualificatif de règle d'"inférence" n'est plus vraiment adapté à la problématique à laquelle répond le système, qui s'est définitivement éloigné de l'usage déductif qui avait encore sa place dans un système tel que $\mathbf{LKp}$ pour adopter pleinement la lecture \textit{bottom-up} de la recherche ou \emph{tentative} de preuve.\\
 
@@ -612,13 +665,93 @@ Les dessins et les preuves de $\mathbf{HS}$ se distinguent ainsi crucialement su
 	\end{longtabu}
 \end{enumerate}
 
-La ludique oublie donc complètement la problématique de l'efficacité lors de la recherche de preuve, d'une part en autorisant des dessins aux dimensions infinies, ce qui correspondrait à une recherche qui ne termine jamais; et d'autre part en admettant une forme d'affaiblissement, rendant toutes les règles irréversibles. En réalité, les notions mêmes de recherche de preuve et de réversibilité n'ont plus de sens dans le cadre ludique, un dessin pris dans son individualité ne pouvant être considéré comme une \emph{preuve} : il faut plutôt le voir comme une \emph{stratégie de dialogue} qui attend d'être testée par d'autres stratégies, test qui a lieu lorsque deux agents exécutent leurs stratégies respectives lors d'une \emph{interaction dialogique}. Si l'interaction se déroule correctement, c'est-à-dire si les deux agents atteignent un consensus (représenté par la règle du \textit{daimon}), alors on dit que l'interaction \emph{converge}. Sinon se créé un dissensus entre les deux agents, et on dit que l'interaction \emph{diverge}. Ce processus d'interaction entre dessins correspond au processus d'élimination des coupures entre preuves en calcul des séquents, et peut être formalisé via la notion de \emph{normalisation d'un réseau de coupure}. Toutefois la présentation de cette notion complexe dépasse notre cadre d'introduction à la ludique et à ses objets de base que sont les dessins.\\
+La ludique oublie donc complètement la problématique de l'efficacité lors de la recherche de preuve, d'une part en autorisant des dessins aux dimensions infinies, ce qui correspondrait à une recherche qui ne termine jamais; et d'autre part en admettant une forme d'affaiblissement, rendant toutes les règles irréversibles. En réalité, les notions mêmes de recherche de preuve et de réversibilité n'ont plus de sens dans le cadre ludique, un dessin pris dans son individualité ne pouvant être considéré comme une \emph{preuve} : il faut plutôt le voir comme une \emph{stratégie de dialogue} qui attend d'être testée par d'autres stratégies, test qui a lieu lorsque deux agents exécutent leurs stratégies respectives lors d'une \emph{interaction dialogique}. Si l'interaction se déroule correctement, c'est-à-dire si les deux agents atteignent un consensus (représenté par la règle du \textit{daimon}), alors on dit que l'interaction \emph{converge}. Sinon se créé un dissensus entre les deux agents, et on dit que l'interaction \emph{diverge}. Ce processus d'interaction entre dessins correspond au processus d'élimination des coupures entre preuves en calcul des séquents, et peut être formalisé via la notion de \emph{normalisation d'un réseau de coupure}. Toutefois la présentation de cette notion complexe dépasse notre cadre d'introduction à la ludique et à ses objets de base que sont les dessins.
 
-Pour finir, il peut être intéressant de donner un exemple de modélisation en ludique d'une situation concrète de dialogue, afin d'illustrer l'interprétation pragmatique des dessins donnée ci-dessus.
+\section{Application à la pragmatique}
 
-% TODO: exemple de modélisation d'une interaction dialogique
+Pour finir, il peut être intéressant de donner un exemple de modélisation en ludique d'une situation concrète de dialogue, afin d'illustrer l'interprétation pragmatique des dessins donnée ci-dessus. Imaginons la situation suivante\footnote{Cet exemple est librement adapté de \cite{LQFD07}, pp. 14-16.} :
+\begin{quote}
+    \it
+    Morgane souhaite savoir si Pierre, dont elle a entendu dire qu’il souhaite vendre des biens immobiliers, va vendre sa maison de campagne en Vendée. Morgane sait que Pierre possède trois biens : la maison en question, un appartement sur Bordeaux, et un terrain en Bretagne. Morgane désire savoir :
+    \begin{enumerate}
+        \item si Pierre va vendre sa maison;
+        \item au cas où Pierre vendrait sa maison, à quel prix ?
+    \end{enumerate}
+\end{quote}
+La stratégie de Morgane consiste à démarrer l'échange avec la question $0$ = "Quels biens immobiliers as-tu l'intention de vendre ?". On peut représenter cette question initiale par une instance de règle positive à partir de l'adresse vide :
+\begin{displaymath}
+    \prftree[r]{\irule{\langle\rangle,\{0\}}}
+        {0 \seq}
+        {\seq \langle\rangle}
+\end{displaymath}
+À partir de là, il faut que Morgane prévoie toutes les réponses possibles de Pierre. Si l'on représente la maison, l'appartement et le terrain respectivement par les entiers 1, 2 et 3, on peut modéliser cette anticipation des "coups de l'adversaire" par l'instance de règle négative :
+\begin{displaymath}
+    \prftree[r]{\irule{0,\mathcal{P}(\{1,2,3\})}}
+        {\seq 01}
+        {\seq 01,02}
+        {\seq 01,03}
+        {\seq 01,02,03}
+        {\seq 02}
+        {\seq 02,03}
+        {\seq 03}
+        {0 \seq}
+\end{displaymath}
+Sachant qu'elle n'est intéressée que par la maison, toutes les fourchettes ne contenant pas le \textit{locus} 01 peuvent être suivies d'une instance du \textit{daimon} traduisant l'abandon du dialogue par Morgane :
+\begin{displaymath}
+    \prftree[r]{\irule{0,\mathcal{P}(\{1,2,3\})}}
+        {\seq 01}
+        {\seq 01,02}
+        {\seq 01,03}
+        {\seq 01,02,03}
+        {\prfbyaxiom{\irule{\dai}}{\seq 02}}
+        {\prfbyaxiom{\irule{\dai}}{\seq 02,03}}
+        {\prfbyaxiom{\irule{\dai}}{\seq 03}}
+        {0 \seq}
+\end{displaymath}
+Morgane doit ensuite demander le prix de la maison, question que l'on peut représenter par un biais quelconque, par exemple 1. Dans le cas où la maison est le seul bien que Pierre souhaite vendre, on aura donc l'instance de règle positive :
+\begin{displaymath}
+    \prftree[r]{\irule{01,\{1\}}}
+        {011 \seq}
+        {\seq 01}
+\end{displaymath}
+On voit que le manche de la fourchette contiendra à chaque fois l'historique de la branche courante du dialogue, représenté par un \textit{locus} dont le premier biais est la question initiale, et les biais subséquents une suite de couples réponse/question. Finalement, Morgane souhaitant simplement obtenir l'information du prix, elle doit être prête à recevoir n'importe lequel, ce que l'on peut représenter par un biais quelconque $i$ équivalent au répertoire égal à l'ensemble des singletons de $\mathbb{N}$ : 
+\begin{displaymath}
+    \prftree[r]{\irule{011,\{\{i\} \mid i \in \mathbb{N}\}}}
+        {\seq 011i}
+        {011 \seq}
+\end{displaymath}
+Une fois le prix obtenu, Morgane peux mettre fin au dialogue avec une instance du \textit{daimon}. Le dessin modélisant la stratégie complète de Morgane est donc :
+\begin{displaymath}
+    \prftree
+        {\prftree
+            {\prftree
+                {\prftree
+                    {\prfbyaxiom{\irule{\dai}}{\seq 011i}}
+                    {011 \seq}}
+                {\seq 01}}
+            {\prftree
+                {\prftree
+                    {\prfbyaxiom{\irule{\dai}}{\seq 011i,02}}
+                    {011 \seq 02}}
+                {\seq 01,02}}
+            {\prftree
+                {\prftree
+                    {\prfbyaxiom{\irule{\dai}}{\seq 011i,03}}
+                    {011 \seq 03}}
+                {\seq 01,03}}
+            {\prftree
+                {\prftree
+                    {\prfbyaxiom{\irule{\dai}}{\seq 011i,02,03}}
+                    {011 \seq 02,03}}
+                {\seq 01,02,03}}
+            {\prfbyaxiom{\irule{\dai}}{\seq 02}}
+            {\prfbyaxiom{\irule{\dai}}{\seq 02,03}}
+            {\prfbyaxiom{\irule{\dai}}{\seq 03}}
+            {0 \seq}}
+        {\seq \langle\rangle}
+\end{displaymath}
 
-\chapter*{Conclusion}
+%\chapter*{Conclusion}
 
 % TODO: présentation formelle de la notion de coupure comme co-présence en un même lieu, puis du processus de normalisation/élimination des coupures
 
@@ -626,12 +759,14 @@ Pour finir, il peut être intéressant de donner un exemple de modélisation en 
 
 % TODO: reconstruction interactive des types/formules via la notion de comportement
 
-En se concentrant sur la conception d'un système le plus expressif possible admettant un maximum de dessins, tout en restant suffisemment consistant d'un point de vue calculatoire pour pouvoir reconstruire les règles logiques. On peut ici faire un parallèle avec le $\lambda$-calcul dans ses versions pur et typée, où le $\lambda$-calcul pur serait associé à la ludique dans son oubli de l'information de typage, et le $\lambda$-calcul typé au système $\mathbf{HS}$\footnote{On peut rendre ce parallèle entre types et formules plus précis via la correspondance de Curry-Howard.}. Toutefois en $\lambda$-calcul le typage se fait de manière "\textit{ad hoc}" en attribuant à chaque variable un type atomique, tandis que l'ambition de la ludique est d'expliquer la notion de formule/type comme un produit de la dynamique calculatoire, comprise comme l'interaction entre les dessins/$\lambda$-termes.
+%En se concentrant sur la conception d'un système le plus expressif possible admettant un maximum de dessins, tout en restant suffisemment consistant d'un point de vue calculatoire pour pouvoir reconstruire les règles logiques. On peut ici faire un parallèle avec le $\lambda$-calcul dans ses versions pur et typée, où le $\lambda$-calcul pur serait associé à la ludique dans son oubli de l'information de typage, et le $\lambda$-calcul typé au système $\mathbf{HS}$\footnote{On peut rendre ce parallèle entre types et formules plus précis via la correspondance de Curry-Howard.}. Toutefois en $\lambda$-calcul le typage se fait de manière "\textit{ad hoc}" en attribuant à chaque variable un type atomique, tandis que l'ambition de la ludique est d'expliquer la notion de formule/type comme un produit de la dynamique calculatoire, comprise comme l'interaction entre les dessins/$\lambda$-termes.
 
 \nocite{Tai68}
+\nocite{Lec08}
 \nocite{Lec11}
 \nocite{Gir03}
 \nocite{Gir06}
+\nocite{Sei07}
 
 \bibliographystyle{amsalpha}
 \bibliography{main}
